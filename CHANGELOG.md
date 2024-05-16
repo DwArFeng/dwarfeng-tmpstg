@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化部分类的文档注释。
+  - com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImpl。
+
 - 增加实体字段。
   - com.dwarfeng.tmpstg.bean.dto.TemporaryStorageInfo.contentLength。
 

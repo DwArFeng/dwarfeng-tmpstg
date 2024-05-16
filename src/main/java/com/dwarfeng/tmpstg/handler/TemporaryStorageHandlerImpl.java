@@ -29,6 +29,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
+ * 临时存储处理器实现。
+ *
  * @author DwArFeng
  * @since 1.0.0
  */
