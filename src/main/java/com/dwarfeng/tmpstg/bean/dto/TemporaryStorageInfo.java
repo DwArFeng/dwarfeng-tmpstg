@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
  */
 public class TemporaryStorageInfo implements Dto {
 
-    private static final long serialVersionUID = 5316163037017194153L;
+    private static final long serialVersionUID = 4405589290801960158L;
 
     private String key;
     private int memoryBufferAllocatedLength;
@@ -19,12 +19,22 @@ public class TemporaryStorageInfo implements Dto {
     private long fileBufferActualLength;
     private int status;
 
+    /**
+     * 临时存储存放的内容的长度。
+     *
+     * <p>
+     * 该字段的值应该等于 <code>memoryBufferActualLength + fileBufferActualLength</code>。
+     *
+     * @since 1.0.1
+     */
+    private long contentLength;
+
     public TemporaryStorageInfo() {
     }
 
     public TemporaryStorageInfo(
             String key, int memoryBufferAllocatedLength, int memoryBufferActualLength, boolean fileBufferUsed,
-            long fileBufferActualLength, int status
+            long fileBufferActualLength, int status, long contentLength
     ) {
         this.key = key;
         this.memoryBufferAllocatedLength = memoryBufferAllocatedLength;
@@ -32,6 +42,7 @@ public class TemporaryStorageInfo implements Dto {
         this.fileBufferUsed = fileBufferUsed;
         this.fileBufferActualLength = fileBufferActualLength;
         this.status = status;
+        this.contentLength = contentLength;
     }
 
     public String getKey() {
@@ -82,6 +93,14 @@ public class TemporaryStorageInfo implements Dto {
         this.status = status;
     }
 
+    public long getContentLength() {
+        return contentLength;
+    }
+
+    public void setContentLength(long contentLength) {
+        this.contentLength = contentLength;
+    }
+
     @Override
     public String toString() {
         return "TemporaryStorageInfo{" +
@@ -91,6 +110,7 @@ public class TemporaryStorageInfo implements Dto {
                 ", fileBufferUsed=" + fileBufferUsed +
                 ", fileBufferActualLength=" + fileBufferActualLength +
                 ", status=" + status +
+                ", contentLength=" + contentLength +
                 '}';
     }
 }

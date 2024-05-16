@@ -197,7 +197,8 @@ public class TemporaryStorageHandlerImpl implements TemporaryStorageHandler {
         try {
             return new TemporaryStorageInfo(
                     key, temporaryStorage.memoryBuffer.length, temporaryStorage.memoryBufferActualLength,
-                    temporaryStorage.fileBufferUsed, temporaryStorage.fileBufferActualLength, temporaryStorage.status
+                    temporaryStorage.fileBufferUsed, temporaryStorage.fileBufferActualLength, temporaryStorage.status,
+                    temporaryStorage.memoryBufferActualLength + temporaryStorage.fileBufferActualLength
             );
         } finally {
             temporaryStorage.storageLock.readLock().unlock();

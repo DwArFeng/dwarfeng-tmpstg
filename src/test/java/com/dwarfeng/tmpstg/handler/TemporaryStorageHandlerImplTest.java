@@ -74,6 +74,7 @@ public class TemporaryStorageHandlerImplTest {
         assertFalse(info.isFileBufferUsed());
         assertEquals(info.getFileBufferActualLength(), 0);
         assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_WORKING);
+        assertEquals(info.getContentLength(), originalContent.length);
         temporaryStorageHandler.dispose(key);
         info = temporaryStorageHandler.inspect(key);
         assertEquals(info.getKey(), key);
@@ -82,6 +83,7 @@ public class TemporaryStorageHandlerImplTest {
         assertFalse(info.isFileBufferUsed());
         assertEquals(info.getFileBufferActualLength(), 0);
         assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_DISPOSED);
+        assertEquals(info.getContentLength(), 0);
     }
 
     @Test
@@ -112,6 +114,7 @@ public class TemporaryStorageHandlerImplTest {
         assertFalse(info.isFileBufferUsed());
         assertEquals(info.getFileBufferActualLength(), 0);
         assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_WORKING);
+        assertEquals(info.getContentLength(), originalContent.length);
         temporaryStorageHandler.dispose(key);
         info = temporaryStorageHandler.inspect(key);
         assertEquals(info.getKey(), key);
@@ -120,6 +123,7 @@ public class TemporaryStorageHandlerImplTest {
         assertFalse(info.isFileBufferUsed());
         assertEquals(info.getFileBufferActualLength(), 0);
         assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_DISPOSED);
+        assertEquals(info.getContentLength(), 0);
     }
 
     @Test
@@ -150,6 +154,7 @@ public class TemporaryStorageHandlerImplTest {
         assertTrue(info.isFileBufferUsed());
         assertEquals(info.getFileBufferActualLength(), 100);
         assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_WORKING);
+        assertEquals(info.getContentLength(), originalContent.length);
         temporaryStorageHandler.dispose(key);
         info = temporaryStorageHandler.inspect(key);
         assertEquals(info.getKey(), key);
@@ -158,6 +163,7 @@ public class TemporaryStorageHandlerImplTest {
         assertFalse(info.isFileBufferUsed());
         assertEquals(info.getFileBufferActualLength(), 0);
         assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_DISPOSED);
+        assertEquals(info.getContentLength(), 0);
     }
 
     @Test
@@ -204,6 +210,7 @@ public class TemporaryStorageHandlerImplTest {
             assertFalse(info.isFileBufferUsed());
             assertEquals(info.getFileBufferActualLength(), 0);
             assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_DISPOSED);
+            assertEquals(info.getContentLength(), 0);
         } catch (Exception e) {
             // 如果发生异常，记录异常并标记测试失败。
             LOGGER.warn("测试过程中发生异常", e);
