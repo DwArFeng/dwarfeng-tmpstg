@@ -8,7 +8,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复部分功能中的 bug。
+  - 修复 TemporaryStorageHandlerImpl 获取的输出流，调用其 `write(int)` 方法时行为不正确的 bug。
 
 #### 功能移除
 

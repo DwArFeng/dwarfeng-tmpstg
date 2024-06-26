@@ -1031,7 +1031,7 @@ public class TemporaryStorageHandlerImpl implements TemporaryStorageHandler {
                 return;
             }
             // 如果 temporaryStorage.memoryBuffer 还有剩余空间：
-            temporaryStorage.memoryBuffer[temporaryStorage.memoryBufferActualLength] = (byte) b;
+            temporaryStorage.memoryBuffer[temporaryStorage.memoryBufferActualLength++] = (byte) b;
         }
 
         @Override
