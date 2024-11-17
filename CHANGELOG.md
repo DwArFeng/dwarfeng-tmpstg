@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化部分类中部分方法的行为分析行为。
+  - com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImpl。
+
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.39` 以规避漏洞。
   - 升级 `subgrade` 依赖版本为 `1.5.7.a` 以规避漏洞。

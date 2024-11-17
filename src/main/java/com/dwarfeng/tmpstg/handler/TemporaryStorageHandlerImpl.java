@@ -2,6 +2,7 @@ package com.dwarfeng.tmpstg.handler;
 
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.tmpstg.bean.dto.TemporaryStorageInfo;
 import com.dwarfeng.tmpstg.exception.TemporaryStorageHandlerStoppedException;
@@ -151,6 +152,7 @@ public class TemporaryStorageHandlerImpl implements TemporaryStorageHandler {
     }
 
     @BehaviorAnalyse
+    @SkipRecord
     @Override
     public Collection<String> keys() throws HandlerException {
         handlerLock.readLock().lock();
