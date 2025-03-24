@@ -68,22 +68,22 @@ public class TemporaryStorageHandlerImplTest {
         assertEquals(originalContent.length, testContent.length);
         assertArrayEquals(originalContent, testContent);
         TemporaryStorageInfo info = temporaryStorageHandler.inspect(key);
-        assertEquals(info.getKey(), key);
-        assertEquals(info.getMemoryBufferAllocatedLength(), maxBufferSizePerStorage - 100);
-        assertEquals(info.getMemoryBufferActualLength(), maxBufferSizePerStorage - 100);
+        assertEquals(key, info.getKey());
+        assertEquals(maxBufferSizePerStorage - 100, info.getMemoryBufferAllocatedLength());
+        assertEquals(maxBufferSizePerStorage - 100, info.getMemoryBufferActualLength());
         assertFalse(info.isFileBufferUsed());
-        assertEquals(info.getFileBufferActualLength(), 0);
-        assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_WORKING);
-        assertEquals(info.getContentLength(), originalContent.length);
+        assertEquals(0, info.getFileBufferActualLength());
+        assertEquals(Constants.TEMPORARY_STORAGE_STATUS_WORKING, info.getStatus());
+        assertEquals(originalContent.length, info.getContentLength());
         temporaryStorageHandler.dispose(key);
         info = temporaryStorageHandler.inspect(key);
-        assertEquals(info.getKey(), key);
-        assertEquals(info.getMemoryBufferAllocatedLength(), 0);
-        assertEquals(info.getMemoryBufferActualLength(), 0);
+        assertEquals(key, info.getKey());
+        assertEquals(0, info.getMemoryBufferAllocatedLength());
+        assertEquals(0, info.getMemoryBufferActualLength());
         assertFalse(info.isFileBufferUsed());
-        assertEquals(info.getFileBufferActualLength(), 0);
-        assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_DISPOSED);
-        assertEquals(info.getContentLength(), 0);
+        assertEquals(0, info.getFileBufferActualLength());
+        assertEquals(Constants.TEMPORARY_STORAGE_STATUS_DISPOSED, info.getStatus());
+        assertEquals(0, info.getContentLength());
     }
 
     @Test
@@ -108,22 +108,22 @@ public class TemporaryStorageHandlerImplTest {
         assertEquals(originalContent.length, testContent.length);
         assertArrayEquals(originalContent, testContent);
         TemporaryStorageInfo info = temporaryStorageHandler.inspect(key);
-        assertEquals(info.getKey(), key);
-        assertEquals(info.getMemoryBufferAllocatedLength(), maxBufferSizePerStorage);
-        assertEquals(info.getMemoryBufferActualLength(), maxBufferSizePerStorage);
+        assertEquals(key, info.getKey());
+        assertEquals(maxBufferSizePerStorage, info.getMemoryBufferAllocatedLength());
+        assertEquals(maxBufferSizePerStorage, info.getMemoryBufferActualLength());
         assertFalse(info.isFileBufferUsed());
-        assertEquals(info.getFileBufferActualLength(), 0);
-        assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_WORKING);
-        assertEquals(info.getContentLength(), originalContent.length);
+        assertEquals(0, info.getFileBufferActualLength());
+        assertEquals(Constants.TEMPORARY_STORAGE_STATUS_WORKING, info.getStatus());
+        assertEquals(originalContent.length, info.getContentLength());
         temporaryStorageHandler.dispose(key);
         info = temporaryStorageHandler.inspect(key);
-        assertEquals(info.getKey(), key);
-        assertEquals(info.getMemoryBufferAllocatedLength(), 0);
-        assertEquals(info.getMemoryBufferActualLength(), 0);
+        assertEquals(key, info.getKey());
+        assertEquals(0, info.getMemoryBufferAllocatedLength());
+        assertEquals(0, info.getMemoryBufferActualLength());
         assertFalse(info.isFileBufferUsed());
-        assertEquals(info.getFileBufferActualLength(), 0);
-        assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_DISPOSED);
-        assertEquals(info.getContentLength(), 0);
+        assertEquals(0, info.getFileBufferActualLength());
+        assertEquals(Constants.TEMPORARY_STORAGE_STATUS_DISPOSED, info.getStatus());
+        assertEquals(0, info.getContentLength());
     }
 
     @Test
@@ -148,22 +148,22 @@ public class TemporaryStorageHandlerImplTest {
         assertEquals(originalContent.length, testContent.length);
         assertArrayEquals(originalContent, testContent);
         TemporaryStorageInfo info = temporaryStorageHandler.inspect(key);
-        assertEquals(info.getKey(), key);
-        assertEquals(info.getMemoryBufferAllocatedLength(), maxBufferSizePerStorage);
-        assertEquals(info.getMemoryBufferActualLength(), maxBufferSizePerStorage);
+        assertEquals(key, info.getKey());
+        assertEquals(maxBufferSizePerStorage, info.getMemoryBufferAllocatedLength());
+        assertEquals(maxBufferSizePerStorage, info.getMemoryBufferActualLength());
         assertTrue(info.isFileBufferUsed());
-        assertEquals(info.getFileBufferActualLength(), 100);
-        assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_WORKING);
-        assertEquals(info.getContentLength(), originalContent.length);
+        assertEquals(100, info.getFileBufferActualLength());
+        assertEquals(Constants.TEMPORARY_STORAGE_STATUS_WORKING, info.getStatus());
+        assertEquals(originalContent.length, info.getContentLength());
         temporaryStorageHandler.dispose(key);
         info = temporaryStorageHandler.inspect(key);
-        assertEquals(info.getKey(), key);
-        assertEquals(info.getMemoryBufferAllocatedLength(), 0);
-        assertEquals(info.getMemoryBufferActualLength(), 0);
+        assertEquals(key, info.getKey());
+        assertEquals(0, info.getMemoryBufferAllocatedLength());
+        assertEquals(0, info.getMemoryBufferActualLength());
         assertFalse(info.isFileBufferUsed());
-        assertEquals(info.getFileBufferActualLength(), 0);
-        assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_DISPOSED);
-        assertEquals(info.getContentLength(), 0);
+        assertEquals(0, info.getFileBufferActualLength());
+        assertEquals(Constants.TEMPORARY_STORAGE_STATUS_DISPOSED, info.getStatus());
+        assertEquals(0, info.getContentLength());
     }
 
     @Test
@@ -198,19 +198,19 @@ public class TemporaryStorageHandlerImplTest {
                 assertEquals(originalContent.length, testContent.length);
                 assertArrayEquals(originalContent, testContent);
                 TemporaryStorageInfo info = temporaryStorageHandler.inspect(key);
-                assertEquals(info.getKey(), key);
+                assertEquals(key, info.getKey());
                 assertTrue(info.isFileBufferUsed());
-                assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_WORKING);
+                assertEquals(Constants.TEMPORARY_STORAGE_STATUS_WORKING, info.getStatus());
             }
             temporaryStorageHandler.dispose(key);
             TemporaryStorageInfo info = temporaryStorageHandler.inspect(key);
-            assertEquals(info.getKey(), key);
-            assertEquals(info.getMemoryBufferAllocatedLength(), 0);
-            assertEquals(info.getMemoryBufferActualLength(), 0);
+            assertEquals(key, info.getKey());
+            assertEquals(0, info.getMemoryBufferAllocatedLength());
+            assertEquals(0, info.getMemoryBufferActualLength());
             assertFalse(info.isFileBufferUsed());
-            assertEquals(info.getFileBufferActualLength(), 0);
-            assertEquals(info.getStatus(), Constants.TEMPORARY_STORAGE_STATUS_DISPOSED);
-            assertEquals(info.getContentLength(), 0);
+            assertEquals(0, info.getFileBufferActualLength());
+            assertEquals(Constants.TEMPORARY_STORAGE_STATUS_DISPOSED, info.getStatus());
+            assertEquals(0, info.getContentLength());
         } catch (Exception e) {
             // 如果发生异常，记录异常并标记测试失败。
             LOGGER.warn("测试过程中发生异常", e);
