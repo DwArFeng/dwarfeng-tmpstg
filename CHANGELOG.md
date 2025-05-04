@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh_CN/VersionBlacklist.md。
+
 - 依赖升级。
   - 升级 `subgrade` 依赖版本为 `1.5.9.a` 以规避漏洞。
 
