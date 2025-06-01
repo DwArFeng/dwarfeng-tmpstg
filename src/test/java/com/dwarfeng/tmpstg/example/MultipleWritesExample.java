@@ -78,7 +78,7 @@ public class MultipleWritesExample {
                 System.err.printf("第 %d 次读取的内容的 MD5 值为 %s, 两个 MD5 值不相等!%n", i + 1, readContentMd5);
             }
         }
-        System.out.print("按回车键继续...");
+        System.out.print("请按回车键继续...");
         scanner.nextLine();
 
         // 2. 清理临时存储。

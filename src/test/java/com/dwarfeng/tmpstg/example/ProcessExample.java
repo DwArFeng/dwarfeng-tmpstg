@@ -49,7 +49,7 @@ public class ProcessExample {
         byte[] content = ContentUtil.randomContent(contentLength);
         String contentMd5 = ContentUtil.md5Checksum(content);
         System.out.printf("生成的内容的 MD5 值为: %s%n", contentMd5);
-        System.out.print("按回车键继续...");
+        System.out.print("请按回车键继续...");
         scanner.nextLine();
 
         // 2. 创建临时存储，并存储内容。
@@ -60,7 +60,7 @@ public class ProcessExample {
             out.write(content);
         }
         System.out.printf("内容已经存储在临时存储中, 存储的键为: %s%n", key);
-        System.out.print("按回车键继续...");
+        System.out.print("请按回车键继续...");
         scanner.nextLine();
 
         // 3. 读取内容，并计算其 MD5 值。
@@ -72,7 +72,7 @@ public class ProcessExample {
         }
         String readContentMd5 = ContentUtil.md5Checksum(readContent);
         System.out.printf("读取的内容的 MD5 值为: %s%n", readContentMd5);
-        System.out.print("按回车键继续...");
+        System.out.print("请按回车键继续...");
         scanner.nextLine();
 
         // 4. 比较两个 MD5 值。

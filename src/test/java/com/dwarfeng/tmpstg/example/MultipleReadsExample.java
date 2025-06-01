@@ -46,7 +46,7 @@ public class MultipleReadsExample {
         byte[] content = ContentUtil.randomContent(contentLength);
         String contentMd5 = ContentUtil.md5Checksum(content);
         System.out.printf("生成的内容的 MD5 值为: %s%n", contentMd5);
-        System.out.print("按回车键继续...");
+        System.out.print("请按回车键继续...");
         scanner.nextLine();
 
         // 2. 创建临时存储，并存储内容。
@@ -57,7 +57,7 @@ public class MultipleReadsExample {
             out.write(content);
         }
         System.out.printf("内容已经存储在临时存储中, 存储的键为: %s%n", key);
-        System.out.print("按回车键继续...");
+        System.out.print("请按回车键继续...");
         scanner.nextLine();
 
         // 3. 多次读取内容，计算并对比其 MD5 值。
@@ -76,7 +76,7 @@ public class MultipleReadsExample {
                 System.err.println("两个 MD5 值不相等!");
             }
         }
-        System.out.print("按回车键继续...");
+        System.out.print("请按回车键继续...");
         scanner.nextLine();
 
         // 4. 清理临时存储。

@@ -4,6 +4,11 @@
 
 #### 功能构建
 
+- 优化 `src/test` 下的部分示例的控制台输出文案。
+  - com.dwarfeng.tmpstg.example.MultipleReadsExample。
+  - com.dwarfeng.tmpstg.example.MultipleWritesExample。
+  - com.dwarfeng.tmpstg.example.ProcessExample。
+
 - Wiki 编写。
   - docs/wiki/zh_CN/QuickStart.md。
 
