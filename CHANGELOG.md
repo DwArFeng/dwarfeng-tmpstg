@@ -4,6 +4,11 @@
 
 #### 功能构建
 
+- 更新 README.md。
+
+- Wiki 更新。
+  - docs/wiki/zh_CN/Introduction.md。
+
 - 依赖升级。
   - 升级 `subgrade` 依赖版本为 `1.5.10.a` 以规避漏洞。
 

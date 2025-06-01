@@ -40,26 +40,30 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 1. 下载源码。
 
-   - 使用 git 进行源码下载。
-        ```
-        git clone git@github.com:DwArFeng/dwarfeng-tmpstg.git
-        ```
+   使用 git 进行源码下载。
 
-   - 对于中国用户，可以使用 gitee 进行高速下载。
-      ```
-      git clone git@gitee.com:dwarfeng/dwarfeng-tmpstg.git
-      ```
+   ```shell
+   git clone git@github.com:DwArFeng/dwarfeng-tmpstg.git
+   ```
+
+   对于中国用户，可以使用 gitee 进行高速下载。
+
+   ```shell
+   git clone git@gitee.com:dwarfeng/dwarfeng-tmpstg.git
+   ```
 
 2. 项目安装。
 
    进入项目根目录，执行 maven 命令
-    ```
-    mvn clean source:jar install
-    ```
+
+   ```shell
+   mvn clean source:jar install
+   ```
 
 3. 项目引入。
 
    在项目的 pom.xml 中添加如下依赖：
+
    ```xml
    <dependency>
        <groupId>com.dwarfeng</groupId>
@@ -69,8 +73,6 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
    ```
 
 4. enjoy it.
-
----
 
 ## 如何使用
 
@@ -120,7 +122,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
-    <!-- 第一个实例 -->
+    <!-- 第 1 个实例 -->
     <bean name="configBuilder1" class="com.dwarfeng.tmpstg.struct.TemporaryStorageConfig.Builder">
         <property name="temporaryFileDirectoryPath" value="${tmpstg.temporary_file_directory_path.1}"/>
         <property name="temporaryFilePrefix" value="${tmpstg.temporary_file_prefix.1}"/>
@@ -136,7 +138,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
         <constructor-arg name="config" ref="config1"/>
     </bean>
 
-    <!-- 第二个实例 -->
+    <!-- 第 2 个实例 -->
     <bean name="configBuilder2" class="com.dwarfeng.tmpstg.struct.TemporaryStorageConfig.Builder">
         <property name="temporaryFileDirectoryPath" value="${tmpstg.temporary_file_directory_path.2}"/>
         <property name="temporaryFilePrefix" value="${tmpstg.temporary_file_prefix.2}"/>
