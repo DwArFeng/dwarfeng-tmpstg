@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化开发环境支持。
+  - 在 .gitignore 中添加 Cursor IDE 相关文件的忽略规则。
+
 - 优化部分 Configuration 类中的常量命名。
   - com.dwarfeng.tmpstg.configuration.SingletonConfiguration。
 
