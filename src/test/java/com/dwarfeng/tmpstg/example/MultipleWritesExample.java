@@ -2,13 +2,13 @@ package com.dwarfeng.tmpstg.example;
 
 import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
 import com.dwarfeng.tmpstg.util.ContentUtil;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 多次写入示例。
@@ -58,7 +58,7 @@ public class MultipleWritesExample {
         System.out.println("1. 多次写入内容, 写入后读取并对比其 MD5 值...");
         String key = temporaryStorageHandler.create();
         for (int i = 0; i < 10; i++) {
-            int contentLength = RandomUtils.nextInt(contentLengthMin, contentLengthMax);
+            int contentLength = ThreadLocalRandom.current().nextInt(contentLengthMin, contentLengthMax);
             byte[] content = ContentUtil.randomContent(contentLength);
             String contentMd5 = ContentUtil.md5Checksum(content);
             System.out.printf("第 %d 次生成的内容的 MD5 值为: %s%n", i + 1, contentMd5);

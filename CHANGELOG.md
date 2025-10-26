@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 代码现代化优化。
+  - 将示例代码中的过时 `RandomUtils` 方法替换为现代的 `ThreadLocalRandom` 方法。
+  - 更新 `com.dwarfeng.tmpstg.example.MultipleWritesExample` 中的随机数生成逻辑。
+  - 更新 `com.dwarfeng.tmpstg.example.ConcurrentOperationExample` 中的随机数生成逻辑。
+
 - 依赖升级。
   - 升级 `subgrade` 依赖版本为 `1.7.0.a` 以规避漏洞。
 

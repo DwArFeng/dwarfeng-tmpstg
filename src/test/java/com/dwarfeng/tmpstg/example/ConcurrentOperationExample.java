@@ -2,7 +2,6 @@ package com.dwarfeng.tmpstg.example;
 
 import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
 import com.dwarfeng.tmpstg.util.ContentUtil;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 多线程操作示例。
@@ -142,7 +142,7 @@ public class ConcurrentOperationExample {
         @Override
         public void run() {
             try {
-                int contentLength = RandomUtils.nextInt(contentLengthMin, contentLengthMax);
+                int contentLength = ThreadLocalRandom.current().nextInt(contentLengthMin, contentLengthMax);
                 byte[] content = ContentUtil.randomContent(contentLength);
                 String contentMd5 = ContentUtil.md5Checksum(content);
                 System.out.printf("任务 %d: 生成的内容的 MD5 值为 %s%n", index, contentMd5);
@@ -150,7 +150,7 @@ public class ConcurrentOperationExample {
                 try (OutputStream out = temporaryStorageHandler.openOutputStream(key, contentLength)) {
                     out.write(content);
                 }
-                long taskSleepDuration = RandomUtils.nextLong(taskSleepDurationMin, taskSleepDurationMax);
+                long taskSleepDuration = ThreadLocalRandom.current().nextLong(taskSleepDurationMin, taskSleepDurationMax);
                 System.out.printf("任务 %d: 休眠 %d 毫秒...%n", index, taskSleepDuration);
                 byte[] readContent = new byte[contentLength];
                 try (InputStream in = temporaryStorageHandler.openInputStream(key)) {
