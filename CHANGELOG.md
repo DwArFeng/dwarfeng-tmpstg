@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/UsageGuide.md。
+
 - 代码现代化优化。
   - 将示例代码中的过时 `RandomUtils` 方法替换为现代的 `ThreadLocalRandom` 方法。
   - 更新 `com.dwarfeng.tmpstg.example.MultipleWritesExample` 中的随机数生成逻辑。

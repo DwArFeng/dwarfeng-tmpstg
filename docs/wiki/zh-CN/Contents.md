@@ -15,3 +15,7 @@
 ## 快速开始
 
 - [Quick Start](./QuickStart.md) - 快速开始，用最快的方式体验本项目。
+
+## 使用指南
+
+- [Usage Guide](./UsageGuide.md) - 使用指南，详细介绍如何使用本项目。
