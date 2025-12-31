@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.tmpstg.util.ServiceExceptionHelper。
+  - com.dwarfeng.tmpstg.example.ConcurrentOperationExample。
+
 - 优化文件格式。
   - 优化 `application-context-*.xml` 文件的格式。
 
