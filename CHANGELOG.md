@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/en-US/README.md。
+  - docs/wiki/zh-CN/README.md。
+
 - 优化部分类的代码，不再使用部分弃用的 API。
   - com.dwarfeng.tmpstg.example.ConcurrentOperationExample。
   - com.dwarfeng.tmpstg.example.MultipleWritesExample。
