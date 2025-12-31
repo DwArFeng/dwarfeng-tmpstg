@@ -158,9 +158,9 @@ public class ConcurrentOperationExample {
                 }
                 String readContentMd5 = ContentUtil.md5Checksum(readContent);
                 if (contentMd5.equals(readContentMd5)) {
-                    System.out.printf("任务 %d: 读取内容并比对 MD5值, 相等!%n", index);
+                    System.out.printf("任务 %d: 读取内容并比对 MD5 值, 相等!%n", index);
                 } else {
-                    System.out.printf("任务 %d: 读取内容并比对 MD5值, 不相等!%n", index);
+                    System.out.printf("任务 %d: 读取内容并比对 MD5 值, 不相等!%n", index);
                 }
                 System.out.printf("任务 %d: 清理临时存储...%n", index);
                 temporaryStorageHandler.disposeAndRemove(key);
