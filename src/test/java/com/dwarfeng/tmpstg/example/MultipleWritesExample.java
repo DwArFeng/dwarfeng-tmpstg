@@ -58,7 +58,7 @@ public class MultipleWritesExample {
         System.out.println("1. 多次写入内容, 写入后读取并对比其 MD5 值...");
         String key = temporaryStorageHandler.create();
         for (int i = 0; i < 10; i++) {
-            int contentLength = RandomUtils.nextInt(contentLengthMin, contentLengthMax);
+            int contentLength = RandomUtils.insecure().randomInt(contentLengthMin, contentLengthMax);
             byte[] content = ContentUtil.randomContent(contentLength);
             String contentMd5 = ContentUtil.md5Checksum(content);
             System.out.printf("第 %d 次生成的内容的 MD5 值为: %s%n", i + 1, contentMd5);

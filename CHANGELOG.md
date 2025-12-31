@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 优化部分类的代码，不再使用部分弃用的 API。
+  - com.dwarfeng.tmpstg.example.ConcurrentOperationExample。
+  - com.dwarfeng.tmpstg.example.MultipleWritesExample。
+
 - 类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.tmpstg.util.ServiceExceptionHelper。
   - com.dwarfeng.tmpstg.example.ConcurrentOperationExample。
