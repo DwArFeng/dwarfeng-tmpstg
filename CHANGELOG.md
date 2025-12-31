@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/en-US/README.md。
+  - docs/wiki/zh-CN/README.md。
+
 - 类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.tmpstg.util.ServiceExceptionHelper。
   - com.dwarfeng.tmpstg.example.ConcurrentOperationExample。
