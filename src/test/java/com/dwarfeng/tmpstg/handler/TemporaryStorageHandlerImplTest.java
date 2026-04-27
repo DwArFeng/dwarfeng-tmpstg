@@ -45,7 +45,8 @@ public class TemporaryStorageHandlerImplTest {
     @Value(SPEL_DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE)
     private int maxBufferSizePerStorage;
 
-    // -----------------------------------------------------------读写测试-----------------------------------------------------------
+    // region 读写测试
+
     @Test
     public void testWriteAndReadOnceWithSmallContent() throws Exception {
         byte[] originalContent = ContentUtil.randomContent(maxBufferSizePerStorage - 100);
@@ -218,7 +219,10 @@ public class TemporaryStorageHandlerImplTest {
         }
     }
 
-    // -----------------------------------------------------------其它方法测试-----------------------------------------------------------
+    // endregion
+
+    // region 其它方法测试
+
     @Test
     public void testExists() throws Exception {
         String key = temporaryStorageHandler.create();
@@ -290,4 +294,6 @@ public class TemporaryStorageHandlerImplTest {
         assertFalse(temporaryStorageHandler.exists(key1));
         assertFalse(temporaryStorageHandler.exists(key2));
     }
+
+    // endregion
 }

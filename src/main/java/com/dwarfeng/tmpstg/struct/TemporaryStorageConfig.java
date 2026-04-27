@@ -104,9 +104,9 @@ public class TemporaryStorageConfig {
         public static final String DEFAULT_TEMPORARY_FILE_PREFIX = "tmpstg-";
         public static final String DEFAULT_TEMPORARY_FILE_SUFFIX = ".tmp";
 
-        // 2048 bytes = 2 KiB
+        // 2048 bytes = 2 KiB。
         public static final int DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE = 2048;
-        // 1048576 bytes = 1 MiB
+        // 1048576 bytes = 1 MiB。
         public static final long DEFAULT_MAX_BUFFER_SIZE_TOTAL = 1048576;
 
         public static final long DEFAULT_CLEAR_DISPOSED_INTERVAL = 300000;

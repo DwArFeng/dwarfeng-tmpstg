@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `dwarfeng-tmpstg` 模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.tmpstg.struct.TemporaryStorageConfig。
+  - com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImplTest。
+
 - 依赖升级。
   - 升级 `log4j2` 依赖版本为 `2.25.4` 以规避漏洞。
   - 升级 `dutil` 依赖版本为 `0.4.2.a-beta` 以规避漏洞。
