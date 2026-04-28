@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/UsageGuide.md。
+
 - `dwarfeng-tmpstg` 模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.tmpstg.struct.TemporaryStorageConfig。
   - com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImplTest。
