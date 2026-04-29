@@ -9,7 +9,7 @@ package com.dwarfeng.tmpstg.stack.exception;
 public class TemporaryStorageStreamOpenException extends TemporaryStorageException {
 
     private static final long serialVersionUID = -4344745192003743419L;
-    
+
     private final String key;
 
     public TemporaryStorageStreamOpenException(String key) {

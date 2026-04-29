@@ -9,7 +9,7 @@ package com.dwarfeng.tmpstg.stack.exception;
 public class TemporaryStorageInvalidStatusException extends TemporaryStorageException {
 
     private static final long serialVersionUID = 5400163730273954048L;
-    
+
     private final String key;
     private final int expectedStatus;
     private final int actualStatus;

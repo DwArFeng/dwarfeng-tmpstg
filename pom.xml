@@ -12,6 +12,8 @@
     <artifactId>dwarfeng-tmpstg</artifactId>
     <version>2.0.0.a-SNAPSHOT</version>
 
+    <packaging>pom</packaging>
+
     <name>dwarfeng-tmpstg</name>
     <url>http://maven.apache.org</url>
 
@@ -306,72 +308,19 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <!-- 程序自身组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>dwarfeng-tmpstg-core</artifactId>
+                <version>2.0.0.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>dwarfeng-tmpstg-api</artifactId>
+                <version>2.0.0.a-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <!-- 单元测试 -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-        </dependency>
-        <!-- 日志处理 -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- FastJson 组件 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <!-- Dutil 组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>dutil-basic</artifactId>
-        </dependency>
-        <!-- Subgrade 组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>subgrade-stack</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>subgrade-sdk</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>subgrade-impl</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <pluginManagement>
@@ -393,39 +342,10 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <!-- Maven 清理插件，用于清理测试时留下的日志。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>logs</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-            <!-- Maven 测试插件，用于跳过测试。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-        <!-- 配置资源目录 -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-        <!-- 配置测试资源目录 -->
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
     </build>
+
+    <modules>
+        <module>dwarfeng-tmpstg-core</module>
+        <module>dwarfeng-tmpstg-api</module>
+    </modules>
 </project>

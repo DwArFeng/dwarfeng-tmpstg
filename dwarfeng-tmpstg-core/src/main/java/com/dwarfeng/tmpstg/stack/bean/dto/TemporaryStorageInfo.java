@@ -11,7 +11,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 public class TemporaryStorageInfo implements Dto {
 
     private static final long serialVersionUID = 2893993705400905651L;
-    
+
     private String key;
     private int memoryBufferAllocatedLength;
     private int memoryBufferActualLength;

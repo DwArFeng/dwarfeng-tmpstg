@@ -71,14 +71,17 @@ buildNumber.properties
 #################
 ## Logger Files
 #################
-/logs/
+/dwarfeng-tmpstg-core/logs/
+/dwarfeng-tmpstg-api/logs/
 
 #################
 ## Configuration Files
 #################
-/conf/
+/dwarfeng-tmpstg-core/conf/
+/dwarfeng-tmpstg-api/conf/
 
 #################
 ## Temporary-file Files
 #################
-/temporary-file/
+/dwarfeng-tmpstg-core/temporary-file/
+/dwarfeng-tmpstg-api/temporary-file/
