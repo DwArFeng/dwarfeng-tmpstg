@@ -14,14 +14,42 @@ public final class ServiceExceptionCodes {
 
     public static final ServiceException.Code TEMPORARY_STORAGE_FAILED =
             new ServiceException.Code(offset(0), "temporary storage failed");
+
     public static final ServiceException.Code TEMPORARY_STORAGE_HANDLER_STOPPED =
             new ServiceException.Code(offset(1), "temporary storage handler stopped");
+
     public static final ServiceException.Code TEMPORARY_STORAGE_NOT_EXISTS =
             new ServiceException.Code(offset(2), "temporary storage not exists");
+
     public static final ServiceException.Code TEMPORARY_STORAGE_INVALID_STATUS =
             new ServiceException.Code(offset(3), "temporary storage invalid status");
+
     public static final ServiceException.Code TEMPORARY_STORAGE_STREAM_OPEN =
             new ServiceException.Code(offset(4), "temporary storage stream open");
+
+    /**
+     * @since 2.0.0
+     */
+    public static final ServiceException.Code TEMPORARY_STORAGE_QOS_FAILED =
+            new ServiceException.Code(offset(5), "temporary storage qos failed");
+
+    /**
+     * @since 2.0.0
+     */
+    public static final ServiceException.Code AMBIGUOUS_TEMPORARY_STORAGE_HANDLER =
+            new ServiceException.Code(offset(6), "ambiguous temporary storage handler");
+
+    /**
+     * @since 2.0.0
+     */
+    public static final ServiceException.Code NO_TEMPORARY_STORAGE_HANDLER_PRESENT =
+            new ServiceException.Code(offset(7), "no temporary storage handler present");
+
+    /**
+     * @since 2.0.0
+     */
+    public static final ServiceException.Code TEMPORARY_STORAGE_QOS_HANDLER_NOT_FOUND =
+            new ServiceException.Code(offset(8), "temporary storage qos handler not found");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -51,6 +79,10 @@ public final class ServiceExceptionCodes {
         TEMPORARY_STORAGE_NOT_EXISTS.setCode(offset(2));
         TEMPORARY_STORAGE_INVALID_STATUS.setCode(offset(3));
         TEMPORARY_STORAGE_STREAM_OPEN.setCode(offset(4));
+        TEMPORARY_STORAGE_QOS_FAILED.setCode(offset(5));
+        AMBIGUOUS_TEMPORARY_STORAGE_HANDLER.setCode(offset(6));
+        NO_TEMPORARY_STORAGE_HANDLER_PRESENT.setCode(offset(7));
+        TEMPORARY_STORAGE_QOS_HANDLER_NOT_FOUND.setCode(offset(8));
     }
 
     private ServiceExceptionCodes() {

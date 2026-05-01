@@ -1,12 +1,20 @@
 package com.dwarfeng.tmpstg.node.configuration;
 
+import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl;
+import com.dwarfeng.tmpstg.impl.handler.TemporaryStorageQosHandlerImpl;
+import com.dwarfeng.tmpstg.impl.service.TemporaryStorageQosServiceImpl;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageQosHandler;
+import com.dwarfeng.tmpstg.stack.service.TemporaryStorageQosService;
 import com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 单例模式配置。
@@ -164,6 +172,13 @@ public class SingletonConfiguration {
     @Deprecated
     public static final String SPEL_DEFAULT_CHECK_MEMORY_INTERVAL = SPEL_CHECK_MEMORY_INTERVAL;
 
+    /**
+     * 临时存储处理器的 Bean 名称。
+     *
+     * @since 2.0.0
+     */
+    public static final String BEAN_NAME_TEMPORARY_STORAGE_HANDLER = "temporaryStorageHandler";
+
     private final ThreadPoolTaskScheduler scheduler;
 
     @Value(SPEL_TEMPORARY_FILE_DIRECTORY_PATH)
@@ -193,7 +208,7 @@ public class SingletonConfiguration {
         this.scheduler = scheduler;
     }
 
-    @Bean(initMethod = "start", destroyMethod = "stop")
+    @Bean(name = BEAN_NAME_TEMPORARY_STORAGE_HANDLER, initMethod = "start")
     public TemporaryStorageHandler temporaryStorageHandler() {
         TemporaryStorageConfig temporaryStorageConfig = new TemporaryStorageConfig(
                 temporaryFileDirectoryPath, temporaryFilePrefix, temporaryFileSuffix, maxBufferSizePerStorage,
@@ -201,5 +216,24 @@ public class SingletonConfiguration {
         );
 
         return new TemporaryStorageHandlerImpl(scheduler, temporaryStorageConfig);
+    }
+
+    /**
+     * @since 2.0.0
+     */
+    @Bean
+    public TemporaryStorageQosHandler temporaryStorageQosHandler() {
+        Map<String, TemporaryStorageHandler> temporaryStorageHandlerMap = new HashMap<>();
+        temporaryStorageHandlerMap.put(BEAN_NAME_TEMPORARY_STORAGE_HANDLER, temporaryStorageHandler());
+        return new TemporaryStorageQosHandlerImpl(temporaryStorageHandlerMap);
+    }
+
+    /**
+     * @since 2.0.0
+     */
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @Bean
+    public TemporaryStorageQosService temporaryStorageQosService(ServiceExceptionMapper serviceExceptionMapper) {
+        return new TemporaryStorageQosServiceImpl(temporaryStorageQosHandler(), serviceExceptionMapper);
     }
 }

@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 新增 QoS 服务。
+  - com.dwarfeng.tmpstg.stack.service.TemporaryStorageQosService。
+
 - 重构项目模块。
   - 新增 `dwarfeng-tmpstg-core` 子模块，并迁移原有代码至该模块。
   - 新增 `dwarfeng-tmpstg-api` 子模块。

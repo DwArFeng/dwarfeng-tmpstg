@@ -16,8 +16,10 @@ import java.util.Objects;
 public final class ServiceExceptionHelper {
 
     /**
-     * 向指定的映射中添加 dwarfeng-ftp 默认的目标映射。
-     * <p>该方法可以在配置类中快速的搭建目标映射。</p>
+     * 向指定的映射中添加 dwarfeng-tmpstg 默认的目标映射。
+     *
+     * <p>
+     * 该方法可以在配置类中快速的搭建目标映射。
      *
      * @param map 指定的映射，允许为 null。
      * @return 添加了默认目标的映射。
@@ -33,6 +35,10 @@ public final class ServiceExceptionHelper {
         map.put(TemporaryStorageInvalidStatusException.class, ServiceExceptionCodes.TEMPORARY_STORAGE_INVALID_STATUS);
         map.put(TemporaryStorageNotExistsException.class, ServiceExceptionCodes.TEMPORARY_STORAGE_NOT_EXISTS);
         map.put(TemporaryStorageStreamOpenException.class, ServiceExceptionCodes.TEMPORARY_STORAGE_STREAM_OPEN);
+        map.put(TemporaryStorageQosException.class, ServiceExceptionCodes.TEMPORARY_STORAGE_QOS_FAILED);
+        map.put(AmbiguousTemporaryStorageHandlerException.class, ServiceExceptionCodes.AMBIGUOUS_TEMPORARY_STORAGE_HANDLER);
+        map.put(NoTemporaryStorageHandlerPresentException.class, ServiceExceptionCodes.NO_TEMPORARY_STORAGE_HANDLER_PRESENT);
+        map.put(TemporaryStorageHandlerNotFoundException.class, ServiceExceptionCodes.TEMPORARY_STORAGE_QOS_HANDLER_NOT_FOUND);
 
         return map;
     }
