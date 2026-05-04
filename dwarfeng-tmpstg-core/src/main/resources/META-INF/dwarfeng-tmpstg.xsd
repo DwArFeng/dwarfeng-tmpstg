@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xsd:schema
+        xmlns="http://dwarfeng.com/schema/dwarfeng-tmpstg"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:tool="http://www.springframework.org/schema/tool"
+        targetNamespace="http://dwarfeng.com/schema/dwarfeng-tmpstg"
+        elementFormDefault="qualified"
+>
+
+    <xsd:import
+            namespace="http://www.springframework.org/schema/tool"
+            schemaLocation="https://www.springframework.org/schema/tool/spring-tool.xsd"
+    />
+
+    <xsd:annotation>
+        <xsd:documentation>
+            <![CDATA[DwArFeng dwarfeng-tmpstg 项目的命名空间支持。]]>
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:element name="config">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[通过该元素配置 TemporaryStorageConfig，用于统一声明临时存储组件的基础运行参数。]]>
+            </xsd:documentation>
+            <xsd:appinfo>
+                <tool:annotation>
+                    <tool:exports type="com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig"/>
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute
+                    name="config-name"
+                    type="xsd:token"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_TEMPORARY_STORAGE_CONFIG_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[TemporaryStorageConfig 的 bean 名称，默认为 temporaryStorageConfig，
+                        供 handler、qos 等后续元素通过引用方式装配。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="temporary-file-directory-path"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_TEMPORARY_FILE_DIRECTORY_PATH}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[临时文件目录路径，默认取 TemporaryStorageConfig.Builder 中的默认值。
+                        该目录用于承接超出内存阈值后的数据落盘，建议配置为可写且具备足够容量的路径。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="temporary-file-prefix"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_TEMPORARY_FILE_PREFIX}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[临时文件前缀，默认取 TemporaryStorageConfig.Builder 中的默认值。
+                        系统在创建临时文件时会将该前缀拼接到文件名中，便于识别与筛选。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="temporary-file-suffix"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_TEMPORARY_FILE_SUFFIX}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[临时文件后缀，默认取 TemporaryStorageConfig.Builder 中的默认值。
+                        可通过该参数区分不同业务场景的临时文件类型。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="max-buffer-size-per-storage"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[每个临时存储最大缓冲区大小，默认取 TemporaryStorageConfig.Builder 中的默认值。
+                        当单个临时存储对象写入数据超过该阈值时，会触发内存到文件的迁移策略。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.Integer"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="max-buffer-size-total"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_MAX_BUFFER_SIZE_TOTAL}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[总体最大缓冲区大小，默认取 TemporaryStorageConfig.Builder 中的默认值。
+                        该参数限制所有临时存储对象在内存中的累计占用，用于控制进程总内存压力。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.Long"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="clear-disposed-interval"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_CLEAR_DISPOSED_INTERVAL}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[清理已释放临时存储任务的执行间隔，默认取 TemporaryStorageConfig.Builder 中的默认值。
+                        间隔越短，临时文件回收越及时，但后台任务调度频率也会提高。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.Long"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="check-memory-interval"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_CHECK_MEMORY_INTERVAL}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[检查内存任务的执行间隔，默认取 TemporaryStorageConfig.Builder 中的默认值。
+                        该任务用于周期性评估缓存占用并执行必要的内存治理动作。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.Long"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="handler">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[通过该元素配置 TemporaryStorageHandler，建立临时存储核心能力的运行实例。]]>
+            </xsd:documentation>
+            <xsd:appinfo>
+                <tool:annotation>
+                    <tool:exports type="com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler"/>
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute
+                    name="handler-name"
+                    type="xsd:token"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_TEMPORARY_STORAGE_HANDLER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[TemporaryStorageHandler 的 bean 名称，默认为 temporaryStorageHandler，
+                        供业务层或服务层按名称引用。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="scheduler-ref"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_THREAD_POOL_TASK_SCHEDULER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[ThreadPoolTaskScheduler bean 引用，默认为 scheduler。
+                        用于承载清理任务与内存检查任务的后台调度执行。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation kind="ref">
+                            <tool:expected-type
+                                    type="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler"
+                            />
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="config-ref"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_TEMPORARY_STORAGE_CONFIG_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[TemporaryStorageConfig bean 引用，默认为 temporaryStorageConfig。
+                        Handler 初始化时将读取该配置以确定缓存与落盘策略。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation kind="ref">
+                            <tool:expected-type type="com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="auto-start"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_TEMPORARY_STORAGE_HANDLER_AUTO_START_VALUE}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[是否在容器启动时自动启动 TemporaryStorageHandler，默认为 true。
+                        设为 false 时可由外部在合适时机手动触发启动流程。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.Boolean"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="qos">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[通过该元素配置 TemporaryStorageQosService，用于对外暴露临时存储的服务接口。]]>
+            </xsd:documentation>
+            <xsd:appinfo>
+                <tool:annotation>
+                    <tool:exports type="com.dwarfeng.tmpstg.stack.service.TemporaryStorageQosService"/>
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute
+                    name="qos-handler-name"
+                    type="xsd:token"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_TEMPORARY_STORAGE_QOS_HANDLER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[TemporaryStorageQosHandler 的 bean 名称，默认 temporaryStorageQosHandler。
+                        该 bean 负责承接服务请求并委托核心 Handler 执行实际逻辑。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="qos-service-name"
+                    type="xsd:token"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_TEMPORARY_STORAGE_QOS_SERVICE_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[TemporaryStorageQosService 的 bean 名称，默认 temporaryStorageQosService。
+                        该名称通常作为业务模块访问临时存储服务的入口。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="handler-ref"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_TEMPORARY_STORAGE_HANDLER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[TemporaryStorageHandler bean 引用，默认 temporaryStorageHandler。
+                        QOS 层通过该引用连接到底层临时存储能力。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation kind="ref">
+                            <tool:expected-type type="com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="sem-ref"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_SERVICE_EXCEPTION_MAPPER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[ServiceExceptionMapper bean 引用，默认 mapServiceExceptionMapper。
+                        用于将内部异常映射为统一的服务异常语义。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation kind="ref">
+                            <tool:expected-type type="com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

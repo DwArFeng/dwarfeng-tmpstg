@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 为项目增加 xsd 配置机制。
+  - 增加 `META-INF/dwarfeng-tmpstg.xsd` 文件。
+  - 增加 `com.dwarfeng.tmpstg.node.configuration.TemporaryStorageNamespaceHandlerSupport` 及对应的定义解析器。
+  - 调整测试目录的相关配置文件，以使用新的 xsd 配置机制。
+
 - 新增 QoS 服务。
   - com.dwarfeng.tmpstg.stack.service.TemporaryStorageQosService。
 
