@@ -33,6 +33,7 @@
         <fastjson.version>1.2.83</fastjson.version>
         <dutil.version>0.4.2.a-beta</dutil.version>
         <subgrade.version>1.8.2.a</subgrade.version>
+        <spring-telqos.version>2.0.0.a</spring-telqos.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -307,6 +308,12 @@
                         <groupId>org.apache.curator</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <!-- Spring-telqos 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>spring-telqos-core</artifactId>
+                <version>${spring-telqos.version}</version>
             </dependency>
             <!-- 程序自身组件 -->
             <dependency>
