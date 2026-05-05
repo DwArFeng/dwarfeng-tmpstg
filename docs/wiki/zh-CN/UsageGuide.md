@@ -72,9 +72,9 @@
 >
 
     <!-- 扫描 dwarfeng-tmpstg 的配置类。 -->
-    <context:component-scan base-package="com.dwarfeng.tmpstg.configuration" use-default-filters="false">
+    <context:component-scan base-package="com.dwarfeng.tmpstg.node.configuration" use-default-filters="false">
         <context:include-filter
-                type="assignable" expression="com.dwarfeng.tmpstg.configuration.SingletonConfiguration"
+                type="assignable" expression="com.dwarfeng.tmpstg.node.configuration.SingletonConfiguration"
         />
     </context:component-scan>
 </beans>
@@ -136,7 +136,7 @@
 
 ### 准备最小化参数
 
-`src/main/resources/tmpstg/tmpstg-settings.properties`：
+`dwarfeng-tmpstg-core/src/test/resources/tmpstg/tmpstg-settings.properties`：
 
 ```properties
 # 临时文件目录路径。
@@ -160,8 +160,8 @@ tmpstg.check_memory_interval=60000
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.bean.dto.TemporaryStorageInfo;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.ByteArrayOutputStream;
@@ -403,6 +403,8 @@ tmpstg.check_memory_interval=-1
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -413,9 +415,9 @@ tmpstg.check_memory_interval=-1
         http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-    <context:component-scan base-package="com.dwarfeng.tmpstg.configuration" use-default-filters="false">
+    <context:component-scan base-package="com.dwarfeng.tmpstg.node.configuration" use-default-filters="false">
         <context:include-filter
-                type="assignable" expression="com.dwarfeng.tmpstg.configuration.SingletonConfiguration"
+                type="assignable" expression="com.dwarfeng.tmpstg.node.configuration.SingletonConfiguration"
         />
     </context:component-scan>
 </beans>
@@ -443,7 +445,7 @@ tmpstg.check_memory_interval=-1
     <task:scheduler id="scheduler" pool-size="2"/>
 
     <!-- 第 1 个实例。 -->
-    <bean name="fooConfigBuilder" class="com.dwarfeng.tmpstg.struct.TemporaryStorageConfig.Builder">
+    <bean name="fooConfigBuilder" class="com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig.Builder">
         <property name="temporaryFileDirectoryPath" value="${tmpstg.temporary_file_directory_path.1}"/>
         <property name="temporaryFilePrefix" value="${tmpstg.temporary_file_prefix.1}"/>
         <property name="temporaryFileSuffix" value="${tmpstg.temporary_file_suffix.1}"/>
@@ -455,7 +457,7 @@ tmpstg.check_memory_interval=-1
     <bean name="fooConfig" factory-bean="fooConfigBuilder" factory-method="build"/>
     <bean
             name="fooTemporaryStorageHandler"
-            class="com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImpl"
+            class="com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl"
             init-method="start"
             destroy-method="stop"
     >
@@ -464,7 +466,7 @@ tmpstg.check_memory_interval=-1
     </bean>
 
     <!-- 第 2 个实例。 -->
-    <bean name="barConfigBuilder" class="com.dwarfeng.tmpstg.struct.TemporaryStorageConfig.Builder">
+    <bean name="barConfigBuilder" class="com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig.Builder">
         <property name="temporaryFileDirectoryPath" value="${tmpstg.temporary_file_directory_path.2}"/>
         <property name="temporaryFilePrefix" value="${tmpstg.temporary_file_prefix.2}"/>
         <property name="temporaryFileSuffix" value="${tmpstg.temporary_file_suffix.2}"/>
@@ -476,7 +478,7 @@ tmpstg.check_memory_interval=-1
     <bean name="barConfig" factory-bean="barConfigBuilder" factory-method="build"/>
     <bean
             name="barTemporaryStorageHandler"
-            class="com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImpl"
+            class="com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl"
             init-method="start"
             destroy-method="stop"
     >
@@ -514,9 +516,9 @@ tmpstg.check_memory_interval.2=30000
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImpl;
-import com.dwarfeng.tmpstg.struct.TemporaryStorageConfig;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl;
+import com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 public class FoobarTemporaryStorageFactory {
@@ -551,12 +553,47 @@ public class FoobarTemporaryStorageFactory {
 
 需要注意：工厂创建的实例应由业务方明确调用 `start()` 与 `stop()`，否则会出现“未启动处理器调用 API”或“资源未关闭”问题。
 
+### XSD 配置
+
+从 `2.0.0.a` 版本开始，可以使用 `dwarfeng-tmpstg` 命名空间装配 `TemporaryStorageConfig`、`TemporaryStorageHandler` 与
+`TemporaryStorageQosService`。  
+在项目的 `application-context-tmpstg.xml` 中追加配置，示例如下:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringPlaceholdersInspection -->
+<beans
+        xmlns:tmpstg="http://dwarfeng.com/schema/dwarfeng-tmpstg"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://dwarfeng.com/schema/dwarfeng-tmpstg
+        http://dwarfeng.com/schema/dwarfeng-tmpstg/dwarfeng-tmpstg.xsd"
+>
+
+    <tmpstg:config
+            temporary-file-directory-path="${tmpstg.temporary_file_directory_path}"
+            temporary-file-prefix="${tmpstg.temporary_file_prefix}"
+            temporary-file-suffix="${tmpstg.temporary_file_suffix}"
+            max-buffer-size-per-storage="${tmpstg.max_buffer_size_per_storage}"
+            max-buffer-size-total="${tmpstg.max_buffer_size_total}"
+            clear-disposed-interval="${tmpstg.clear_disposed_interval}"
+            check-memory-interval="${tmpstg.check_memory_interval}"
+    />
+    <tmpstg:handler/>
+    <tmpstg:qos/>
+</beans>
+```
+
 ### 接入模式选择建议
 
 1. 单系统单配置场景优先单例模式。
 2. 多租户或多资源池隔离场景优先多实例模式。
 3. 动态按任务创建/回收处理器实例时使用任意数量实例模式。
 4. 若团队运维成熟度一般，建议先从单例模式开始。
+5. XSD 配置相比 XML bean 配置更简便，并可以享受 IDE 带来的自动补全，可作为其上位替代方案。
 
 ## API 使用详解
 
@@ -575,7 +612,7 @@ public class FoobarTemporaryStorageFactory {
 package com.example.foobar;
 
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.tmpstg.bean.dto.TemporaryStorageInfo;
+import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -626,7 +663,7 @@ public interface TemporaryStorageHandlerSignatureReference {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 public class ExistsSnippet {
 
@@ -641,7 +678,7 @@ public class ExistsSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.util.Collection;
 
@@ -663,8 +700,8 @@ public class CreateAndKeysSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.bean.dto.TemporaryStorageInfo;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 public class InspectSnippet {
 
@@ -679,8 +716,8 @@ public class InspectSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.bean.dto.TemporaryStorageInfo;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -711,7 +748,7 @@ public class FoobarStorageLifecycleService {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.OutputStream;
 
@@ -731,7 +768,7 @@ public class OpenOutputStreamUnknownLengthSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.OutputStream;
 
@@ -751,7 +788,7 @@ public class OpenOutputStreamKnownLengthSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.InputStream;
 
@@ -771,7 +808,7 @@ public class OpenInputStreamSnippet {
 package com.example.foobar;
 
 import com.dwarfeng.dutil.basic.io.IOUtil;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -798,7 +835,7 @@ public class MultipleReadSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.OutputStream;
 
@@ -827,7 +864,7 @@ public class MultipleWriteSnippet {
 package com.example.foobar;
 
 import com.dwarfeng.dutil.basic.io.IOUtil;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.*;
 
@@ -868,7 +905,7 @@ public class FoobarBinaryStorageService {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 public class DisposeSnippet {
 
@@ -883,7 +920,7 @@ public class DisposeSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 public class RemoveSnippet {
 
@@ -898,7 +935,7 @@ public class RemoveSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 public class RemoveIfDisposedSnippet {
 
@@ -913,7 +950,7 @@ public class RemoveIfDisposedSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 public class DisposeAndRemoveSnippet {
 
@@ -928,7 +965,7 @@ public class DisposeAndRemoveSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 public class ClearDisposedSnippet {
 
@@ -943,7 +980,7 @@ public class ClearDisposedSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 public class FoobarCleanupService {
 
@@ -985,7 +1022,7 @@ public class FoobarCleanupService {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.util.Constants;
+import com.dwarfeng.tmpstg.sdk.util.Constants;
 
 public class TemporaryStorageStatusSnippet {
 
@@ -1010,7 +1047,7 @@ public class TemporaryStorageStatusSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.OutputStream;
 
@@ -1044,8 +1081,8 @@ package com.example.foobar;
 
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.tmpstg.bean.dto.TemporaryStorageInfo;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -1274,7 +1311,7 @@ public class FoobarTemporaryFileHandler {
 package com.example.foobar;
 
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.OutputStream;
 
@@ -1364,7 +1401,7 @@ public class FoobarFacade {
 package com.example.foobar;
 
 import com.dwarfeng.dutil.basic.io.IOUtil;
-import com.dwarfeng.tmpstg.handler.TemporaryStorageHandler;
+import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.*;
 
