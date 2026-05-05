@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 更新 README.md。
+
+- Wiki 更新。
+  - docs/wiki/zh-CN/Introduction.md。
+
 - 新增 spring-telqos 框架集成指令。
   - com.dwarfeng.tmpstg.api.integration.springtelqos.TmpstgCommand。
 

@@ -16,14 +16,14 @@ Dwarfeng（赵扶风）的临时存储服务，基于 `subgrade` 项目，使用
 7. 多级别锁机制，一个临时存储使用时不会阻塞其他临时存储的读写操作。
 8. 临时存储释放后支持手动清理以及自动清理（可通过选项选择是否启用），适用于不同的场景。
 
-运行 `src/test` 下的示例以观察全部特性。
+运行 `dwarfeng-tmpstg-core/src/test` 下的示例以观察全部特性。
 
-| 示例类名                                                   | 说明      |
-|--------------------------------------------------------|---------|
-| com.dwarfeng.tmpstg.example.ConcurrentOperationExample | 多线程操作示例 |
-| com.dwarfeng.tmpstg.example.MultipleReadsExample       | 多次读取示例  |
-| com.dwarfeng.tmpstg.example.MultipleWritesExample      | 多次写入示例  |
-| com.dwarfeng.tmpstg.example.ProcessExample             | 流程示例    |
+| 示例类名                                                        | 说明      |
+|-------------------------------------------------------------|---------|
+| com.dwarfeng.tmpstg.node.example.ConcurrentOperationExample | 多线程操作示例 |
+| com.dwarfeng.tmpstg.node.example.MultipleReadsExample       | 多次读取示例  |
+| com.dwarfeng.tmpstg.node.example.MultipleWritesExample      | 多次写入示例  |
+| com.dwarfeng.tmpstg.node.example.ProcessExample             | 流程示例    |
 
 ## 文档
 
@@ -76,17 +76,19 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 ## 如何使用
 
-1. 运行 `src/test` 下的示例代码以观察全部特性。
+1. 运行 `dwarfeng-tmpstg-core/src/test` 下的示例代码以观察全部特性。
 2. 观察项目结构，将其中的配置运用到其它的 subgrade 项目中。
 
 ### 单例模式
 
-加载 `com.dwarfeng.tmpstg.configuration.SingletonConfiguration`，即可获得单例模式的 `TmpstgHandler`。  
-在项目的 `application-context-scan.xml` 中追加 `com.dwarfeng.tmpstg.configuration` 包中
+加载 `com.dwarfeng.tmpstg.node.configuration.SingletonConfiguration`，即可获得单例模式的 `TemporaryStorageHandler`。
+在项目的 `application-context-scan.xml` 中追加 `com.dwarfeng.tmpstg.node.configuration` 包中
 `SingletonConfiguration` 的扫描，示例如下:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -97,11 +99,11 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
         http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-    <!-- 扫描 configuration 包中的 SingletonConfiguration -->
-    <context:component-scan base-package="com.dwarfeng.tmpstg.configuration" use-default-filters="false">
+    <!-- 扫描 node.configuration 包中的 SingletonConfiguration -->
+    <context:component-scan base-package="com.dwarfeng.tmpstg.node.configuration" use-default-filters="false">
         <context:include-filter
                 type="assignable"
-                expression="com.dwarfeng.tmpstg.configuration.SingletonConfiguration"
+                expression="com.dwarfeng.tmpstg.node.configuration.SingletonConfiguration"
         />
     </context:component-scan>
 </beans>
@@ -123,7 +125,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
         http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
     <!-- 第 1 个实例 -->
-    <bean name="configBuilder1" class="com.dwarfeng.tmpstg.struct.TemporaryStorageConfig.Builder">
+    <bean name="configBuilder1" class="com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig.Builder">
         <property name="temporaryFileDirectoryPath" value="${tmpstg.temporary_file_directory_path.1}"/>
         <property name="temporaryFilePrefix" value="${tmpstg.temporary_file_prefix.1}"/>
         <property name="temporaryFileSuffix" value="${tmpstg.temporary_file_suffix.1}"/>
@@ -133,13 +135,13 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
         <property name="checkMemoryInterval" value="${tmpstg.check_memory_interval.1}"/>
     </bean>
     <bean name="config1" factory-bean="configBuilder1" factory-method="build"/>
-    <bean name="instance1" class="com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImpl">
+    <bean name="instance1" class="com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl">
         <constructor-arg name="scheduler" ref="scheduler"/>
         <constructor-arg name="config" ref="config1"/>
     </bean>
 
     <!-- 第 2 个实例 -->
-    <bean name="configBuilder2" class="com.dwarfeng.tmpstg.struct.TemporaryStorageConfig.Builder">
+    <bean name="configBuilder2" class="com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig.Builder">
         <property name="temporaryFileDirectoryPath" value="${tmpstg.temporary_file_directory_path.2}"/>
         <property name="temporaryFilePrefix" value="${tmpstg.temporary_file_prefix.2}"/>
         <property name="temporaryFileSuffix" value="${tmpstg.temporary_file_suffix.2}"/>
@@ -149,10 +151,43 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
         <property name="checkMemoryInterval" value="${tmpstg.check_memory_interval.2}"/>
     </bean>
     <bean name="config2" factory-bean="configBuilder2" factory-method="build"/>
-    <bean name="instance2" class="com.dwarfeng.tmpstg.handler.TemporaryStorageHandlerImpl">
+    <bean name="instance2" class="com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl">
         <constructor-arg name="scheduler" ref="scheduler"/>
         <constructor-arg name="config" ref="config2"/>
     </bean>
+</beans>
+```
+
+### XSD 配置
+
+从 `2.0.0.a` 版本开始，可以使用 `dwarfeng-tmpstg` 命名空间装配 `TemporaryStorageConfig`、`TemporaryStorageHandler` 与 `TemporaryStorageQosService`。  
+在项目的 `application-context-tmpstg.xml` 中追加配置，示例如下:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringPlaceholdersInspection -->
+<beans
+        xmlns:tmpstg="http://dwarfeng.com/schema/dwarfeng-tmpstg"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://dwarfeng.com/schema/dwarfeng-tmpstg
+        http://dwarfeng.com/schema/dwarfeng-tmpstg/dwarfeng-tmpstg.xsd"
+>
+
+    <tmpstg:config
+            temporary-file-directory-path="${tmpstg.temporary_file_directory_path}"
+            temporary-file-prefix="${tmpstg.temporary_file_prefix}"
+            temporary-file-suffix="${tmpstg.temporary_file_suffix}"
+            max-buffer-size-per-storage="${tmpstg.max_buffer_size_per_storage}"
+            max-buffer-size-total="${tmpstg.max_buffer_size_total}"
+            clear-disposed-interval="${tmpstg.clear_disposed_interval}"
+            check-memory-interval="${tmpstg.check_memory_interval}"
+    />
+    <tmpstg:handler/>
+    <tmpstg:qos/>
 </beans>
 ```
 
