@@ -34,7 +34,8 @@ public class TemporaryStorageHandlerImplTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(TemporaryStorageHandlerImplTest.class);
 
     private static final String SPEL_DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE = "${tmpstg.max_buffer_size_per_storage:" +
-            "#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE}}";
+            "#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder)" +
+            ".DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE}}";
 
     @Autowired
     private TemporaryStorageHandler temporaryStorageHandler;

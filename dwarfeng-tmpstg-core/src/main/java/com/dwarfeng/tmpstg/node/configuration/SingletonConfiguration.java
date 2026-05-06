@@ -31,7 +31,8 @@ public class SingletonConfiguration {
      * @since 1.0.7
      */
     public static final String SPEL_TEMPORARY_FILE_DIRECTORY_PATH = "${tmpstg.temporary_file_directory_path:" +
-            "#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_TEMPORARY_FILE_DIRECTORY_PATH}}";
+            "#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder)" +
+            ".DEFAULT_TEMPORARY_FILE_DIRECTORY_PATH}}";
 
     /**
      * SPEL: 临时存储临时文件的前缀。
@@ -55,7 +56,8 @@ public class SingletonConfiguration {
      * @since 1.0.7
      */
     public static final String SPEL_MAX_BUFFER_SIZE_PER_STORAGE = "${tmpstg.max_buffer_size_per_storage:" +
-            "#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder).DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE}}";
+            "#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder)" +
+            ".DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE}}";
 
     /**
      * SPEL: 临时存储总的最大缓冲区大小。

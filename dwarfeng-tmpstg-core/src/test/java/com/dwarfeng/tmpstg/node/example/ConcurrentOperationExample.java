@@ -150,7 +150,9 @@ public class ConcurrentOperationExample {
                 try (OutputStream out = temporaryStorageHandler.openOutputStream(key, contentLength)) {
                     out.write(content);
                 }
-                long taskSleepDuration = ThreadLocalRandom.current().nextLong(taskSleepDurationMin, taskSleepDurationMax);
+                long taskSleepDuration = ThreadLocalRandom.current().nextLong(
+                        taskSleepDurationMin, taskSleepDurationMax
+                );
                 System.out.printf("任务 %d: 休眠 %d 毫秒...%n", index, taskSleepDuration);
                 byte[] readContent = new byte[contentLength];
                 try (InputStream in = temporaryStorageHandler.openInputStream(key)) {
