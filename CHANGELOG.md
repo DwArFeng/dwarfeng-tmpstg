@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- 优化部分类中字段的注解。
+  - com.dwarfeng.tmpstg.api.integration.springtelqos.TmpstgCommand。
 
 ### Bug 修复
 

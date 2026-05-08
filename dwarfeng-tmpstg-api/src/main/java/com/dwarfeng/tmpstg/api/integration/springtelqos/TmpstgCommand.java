@@ -32,7 +32,7 @@ import java.util.List;
 @TelqosCommand
 public class TmpstgCommand extends CliCommand {
 
-    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
+    @SuppressWarnings({"SpellCheckingInspection", "GrazieInspectionRunner", "RedundantSuppression"})
     private static final String IDENTITY = "tmpstg";
 
     // region 指令选项
