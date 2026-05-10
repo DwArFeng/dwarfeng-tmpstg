@@ -11,6 +11,7 @@
 ## 项目打包、安装、使用
 
 - [Install by Source Code](./InstallBySourceCode.md) - 通过源码安装本项目。
+- [Use with Maven](./UseWithMaven.md) - 通过 Maven 使用本项目。
 - [Usage Guide](./UsageGuide.md) - 使用指南，系统说明本项目的接入方式、配置方式与 API 用法。
 
 ## 版本黑名单

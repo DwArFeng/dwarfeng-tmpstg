@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/UseWithMaven.md。
+
 - 优化部分类中字段的注解。
   - com.dwarfeng.tmpstg.api.integration.springtelqos.TmpstgCommand。
 
