@@ -22,9 +22,16 @@
     <!-- 省略其他配置... -->
     <dependencies>
         <!-- 省略其他配置... -->
+        <!-- 适用于仅需要 dwarfeng-tmpstg 核心能力的场景。 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>dwarfeng-tmpstg</artifactId>
+            <artifactId>dwarfeng-tmpstg-core</artifactId>
+            <version>${dwarfeng-tmpstg.version}</version>
+        </dependency>
+        <!-- 适用于需要与 spring-telqos 等项目集成能力的场景。 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dwarfeng-tmpstg-api</artifactId>
             <version>${dwarfeng-tmpstg.version}</version>
         </dependency>
         <!-- 省略其他配置... -->
