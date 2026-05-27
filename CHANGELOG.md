@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `dwarfeng-tmpstg-api` 子模块配置文件优化。
+  - telqos/connection.properties。
+
 - 依赖升级。
   - 升级 `subgrade` 依赖版本为 `1.8.3.a` 以规避漏洞。
   - 升级 `spring-telqos` 依赖版本为 `2.0.2.a` 以规避漏洞。
