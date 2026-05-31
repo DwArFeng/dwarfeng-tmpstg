@@ -21,3 +21,7 @@
 ## 快速开始
 
 - [Quick Start](./QuickStart.md) - 快速开始，用最快的方式体验本项目。
+
+## 配置
+
+- [Config Parameters](./ConfigParameters.md) - 配置参数详解，说明 FtpConfig 各配置项含义、默认值与校验规则。

@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/ConfigParameters.md。
+
 - 项目结构优化。
   - 将 `TemporaryStorageConfigUtil` 移动至 `com.dwarfeng.tmpstg.stack.util` 包下。
 
