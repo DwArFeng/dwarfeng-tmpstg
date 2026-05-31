@@ -1,7 +1,7 @@
 package com.dwarfeng.tmpstg.stack.struct;
 
 import com.dwarfeng.dutil.basic.prog.Buildable;
-import com.dwarfeng.tmpstg.sdk.util.TemporaryStorageConfigUtil;
+import com.dwarfeng.tmpstg.stack.util.TemporaryStorageConfigUtil;
 
 /**
  * 临时存储配置。
