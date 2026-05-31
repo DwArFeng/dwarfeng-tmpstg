@@ -302,23 +302,6 @@
                 </xsd:annotation>
             </xsd:attribute>
             <xsd:attribute
-                    name="handler-ref"
-                    type="xsd:string"
-                    default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_TEMPORARY_STORAGE_HANDLER_NAME}"
-            >
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <![CDATA[TemporaryStorageHandler bean 引用，默认 temporaryStorageHandler。
-                        QOS 层通过该引用连接到底层临时存储能力。]]>
-                    </xsd:documentation>
-                    <xsd:appinfo>
-                        <tool:annotation kind="ref">
-                            <tool:expected-type type="com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler"/>
-                        </tool:annotation>
-                    </xsd:appinfo>
-                </xsd:annotation>
-            </xsd:attribute>
-            <xsd:attribute
                     name="sem-ref"
                     type="xsd:string"
                     default="#{T(com.dwarfeng.tmpstg.sdk.util.Constants).XSD_DEFAULT_SERVICE_EXCEPTION_MAPPER_NAME}"
