@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-    <properties>
-        <property name="LOG_DIR">${sys:log.dir:-logs}</property>
-    </properties>
-
     <Appenders>
+        <!--############################################### Console ###############################################-->
         <Console name="std.console" target="SYSTEM_OUT" follow="true">
-            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="[%d{DEFAULT}] [%p] [%t] [%c{1.}]: %m%n" charset="UTF-8"/>
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{DEFAULT}] [%p] [%t] [%c{1.}]: %m%n"/>
         </Console>
-
-        <Async name="sync:std.console">
+        <Async name="sync.console">
             <AppenderRef ref="std.console"/>
         </Async>
     </Appenders>
 
     <Loggers>
+        <!--############################################# Root logger #############################################-->
         <Root level="ALL">
-            <appender-ref ref="sync:std.console"/>
+            <appender-ref ref="sync.console"/>
         </Root>
     </Loggers>
 </Configuration>
