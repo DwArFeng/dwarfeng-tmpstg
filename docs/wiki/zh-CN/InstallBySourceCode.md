@@ -46,6 +46,8 @@ git checkout version-tag-here
 
 如有必要，请联系本项目的主要开发人员索要制品仓库地址或离线文件。
 
+`dwarfeng-tmpstg-api` 还直接依赖 `spring-telqos-core`；没有私有制品仓库时，也需要按照该依赖项目的文档完成安装。
+
 ### dutil
 
 使用 git 进行源码下载。

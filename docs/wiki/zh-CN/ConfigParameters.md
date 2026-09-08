@@ -23,7 +23,8 @@
 
 ### tmpstg.temporary_file_directory_path
 
-临时文件目录路径。用于承接超出内存阈值后的数据落盘。目录需存在或可创建，且具备读写权限。类型：String，默认值：java.io.tmpdir。
+临时文件目录路径。用于承接内存缓冲区写满或受配置上限限制后的数据落盘。目录需存在或可创建，且具备读写权限。类型：String，默认值：System.getProperty
+("java.io.tmpdir")。
 
 ### tmpstg.temporary_file_prefix
 
@@ -37,7 +38,8 @@
 
 ### tmpstg.max_buffer_size_per_storage
 
-单个存储的最大缓冲区大小，单位字节。超过此值时，剩余部分写入临时文件。必须大于 0，且不能大于 tmpstg.max_buffer_size_total。类型：int，默认值：2048。
+单个存储的最大缓冲区大小，单位字节。内存缓冲区写满后，剩余部分写入临时文件；全局缓冲区上限也可能使实际分配大小更小。必须大于
+0，且不能大于 tmpstg.max_buffer_size_total。类型：int，默认值：2048。
 
 ### tmpstg.max_buffer_size_total
 

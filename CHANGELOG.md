@@ -4,6 +4,16 @@
 
 ### 功能构建
 
+- 更新 README.md。
+
+- Wiki 更新。
+  - docs/wiki/zh-CN/ConfigParameters.md。
+  - docs/wiki/zh-CN/Contents.md。
+  - docs/wiki/zh-CN/InstallBySourceCode.md。
+  - docs/wiki/zh-CN/Introduction.md。
+  - docs/wiki/zh-CN/QuickStart.md。
+  - docs/wiki/zh-CN/UsageGuide.md。
+
 - 优化部分示例的控制台输出方法。
   - com.dwarfeng.tmpstg.api.integration.example.TelqosExample。
   - com.dwarfeng.tmpstg.node.example.ConcurrentOperationExample。

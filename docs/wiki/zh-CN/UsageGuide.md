@@ -40,7 +40,7 @@
         <!-- 省略其他配置 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>dwarfeng-tmpstg</artifactId>
+            <artifactId>dwarfeng-tmpstg-core</artifactId>
             <version>${dwarfeng-tmpstg.version}</version>
         </dependency>
         <!-- 省略其他配置 -->
@@ -51,16 +51,19 @@
 
 ### 基础 Spring 配置
 
-`dwarfeng-tmpstg` 的单例接入通常需要三部分配置：
+`dwarfeng-tmpstg` 的单例接入通常需要四部分配置：
 
 1. 扫描 `SingletonConfiguration`。
 2. 提供 `ThreadPoolTaskScheduler` 类型的 `scheduler` Bean（用于后台清理与巡检任务）。
 3. 加载 `tmpstg.*` 配置参数。
+4. 提供 `ServiceExceptionMapper` Bean（用于创建 QoS 服务）。
 
 `application-context-scan.xml`：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -249,7 +252,7 @@ public class FoobarQuickStart {
 
 - 类型：`String`。
 - 默认值：`System.getProperty("java.io.tmpdir")`。
-- 说明：临时文件目录路径，内存不足时超出部分数据会落到该目录下的文件缓冲。
+- 说明：临时文件目录路径，内存缓冲区写满或受配置上限限制时，超出部分数据会落到该目录下的文件缓冲。
 - 约束：
   不能为空。
   路径不存在时会尝试创建。
@@ -423,7 +426,7 @@ tmpstg.check_memory_interval=-1
 </beans>
 ```
 
-该模式下，`TemporaryStorageHandler` 会按 Spring Bean 生命周期自动 `start/stop`。
+该模式下，`TemporaryStorageHandler` 会按 Spring Bean 生命周期自动 `start`。
 
 ### 多实例模式
 
@@ -1463,7 +1466,7 @@ public class FoobarTemporaryContentGateway {
 
 ### 处理器未启动异常
 
-现象：调用任一 API 抛出“临时存储处理器处于停止状态”。
+现象：调用需要处理器处于启动状态的存储操作时，抛出“临时存储处理器处于停止状态”。
 
 排查顺序建议：
 

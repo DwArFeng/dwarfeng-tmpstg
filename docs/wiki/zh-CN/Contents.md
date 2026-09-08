@@ -24,4 +24,4 @@
 
 ## 配置
 
-- [Config Parameters](./ConfigParameters.md) - 配置参数详解，说明 FtpConfig 各配置项含义、默认值与校验规则。
+- [Config Parameters](./ConfigParameters.md) - 配置参数详解，说明 TemporaryStorageConfig 各配置项含义、默认值与校验规则。

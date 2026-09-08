@@ -18,12 +18,18 @@ Dwarfeng（赵扶风）的临时存储服务，基于 `subgrade` 项目，使用
 
 运行 `dwarfeng-tmpstg-core/src/test` 下的示例以观察全部特性。
 
-| 示例类名                                                        | 说明      |
-|-------------------------------------------------------------|---------|
+| 示例类名                                                    | 说明           |
+|-------------------------------------------------------------|----------------|
 | com.dwarfeng.tmpstg.node.example.ConcurrentOperationExample | 多线程操作示例 |
-| com.dwarfeng.tmpstg.node.example.MultipleReadsExample       | 多次读取示例  |
-| com.dwarfeng.tmpstg.node.example.MultipleWritesExample      | 多次写入示例  |
-| com.dwarfeng.tmpstg.node.example.ProcessExample             | 流程示例    |
+| com.dwarfeng.tmpstg.node.example.MultipleReadsExample       | 多次读取示例   |
+| com.dwarfeng.tmpstg.node.example.MultipleWritesExample      | 多次写入示例   |
+| com.dwarfeng.tmpstg.node.example.ProcessExample             | 流程示例       |
+
+运行 `dwarfeng-tmpstg-api/src/test` 下的示例以观察 API 扩展特性。
+
+| 示例类名                                                  | 说明                                           |
+|-----------------------------------------------------------|------------------------------------------------|
+| com.dwarfeng.tmpstg.api.integration.example.TelqosExample | Telqos 示例：通过运维指令操作临时存储 QoS 服务 |
 
 ## 文档
 
@@ -62,12 +68,24 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 3. 项目引入。
 
-   在项目的 pom.xml 中添加如下依赖：
+   根工程坐标为 `com.dwarfeng:dwarfeng-tmpstg`。在业务项目中使用时，通常按需要引入具体模块。
+
+   如果只需要核心临时存储能力，在项目的 pom.xml 中添加如下依赖：
 
    ```xml
    <dependency>
        <groupId>com.dwarfeng</groupId>
-       <artifactId>dwarfeng-tmpstg</artifactId>
+       <artifactId>dwarfeng-tmpstg-core</artifactId>
+       <version>${dwarfeng-tmpstg.version}</version>
+   </dependency>
+   ```
+
+   如果需要 spring-telqos 运维指令能力，在项目的 pom.xml 中添加如下依赖：
+
+   ```xml
+   <dependency>
+       <groupId>com.dwarfeng</groupId>
+       <artifactId>dwarfeng-tmpstg-api</artifactId>
        <version>${dwarfeng-tmpstg.version}</version>
    </dependency>
    ```
@@ -76,8 +94,9 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 ## 如何使用
 
-1. 运行 `dwarfeng-tmpstg-core/src/test` 下的示例代码以观察全部特性。
-2. 观察项目结构，将其中的配置运用到其它的 subgrade 项目中。
+1. 运行 `dwarfeng-tmpstg-core/src/test` 下的示例代码以观察核心特性。
+2. 运行 `dwarfeng-tmpstg-api/src/test` 下的示例代码以观察 API 扩展特性。
+3. 观察项目结构，将其中的配置运用到其它的 subgrade 项目中。
 
 ### 单例模式
 
@@ -135,7 +154,8 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
         <property name="checkMemoryInterval" value="${tmpstg.check_memory_interval.1}"/>
     </bean>
     <bean name="config1" factory-bean="configBuilder1" factory-method="build"/>
-    <bean name="instance1" class="com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl">
+    <bean name="instance1" class="com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl"
+          init-method="start" destroy-method="stop">
         <constructor-arg name="scheduler" ref="scheduler"/>
         <constructor-arg name="config" ref="config1"/>
     </bean>
@@ -151,7 +171,8 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
         <property name="checkMemoryInterval" value="${tmpstg.check_memory_interval.2}"/>
     </bean>
     <bean name="config2" factory-bean="configBuilder2" factory-method="build"/>
-    <bean name="instance2" class="com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl">
+    <bean name="instance2" class="com.dwarfeng.tmpstg.impl.handler.TemporaryStorageHandlerImpl"
+          init-method="start" destroy-method="stop">
         <constructor-arg name="scheduler" ref="scheduler"/>
         <constructor-arg name="config" ref="config2"/>
     </bean>
