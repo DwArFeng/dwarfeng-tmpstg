@@ -1,5 +1,6 @@
 package com.dwarfeng.tmpstg.node.example;
 
+import com.dwarfeng.dutil.basic.io.CT;
 import com.dwarfeng.tmpstg.sdk.util.ContentUtil;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 import org.apache.commons.lang3.StringUtils;
@@ -30,12 +31,12 @@ public class MultipleWritesExample {
         Scanner scanner = new Scanner(System.in);
 
         // 显示欢迎信息。
-        System.out.println("开发者您好!");
-        System.out.println("这是一个示例, 用于演示 dwarfeng-tmpstg 的功能");
-        System.out.println("该示例将会会生成一个随机内容, 您需要指定这个内容的长度, 格式为: min-max, 单位为字节");
+        CT.trace("开发者您好!");
+        CT.trace("这是一个示例, 用于演示 dwarfeng-tmpstg 的功能");
+        CT.trace("该示例将会会生成一个随机内容, 您需要指定这个内容的长度, 格式为: min-max, 单位为字节");
 
         // 获取随机内容的长度。
-        System.out.println("请指定单个任务生成的随机内容的长度, 默认值为 1024-4096");
+        CT.trace("请指定单个任务生成的随机内容的长度, 默认值为 1024-4096");
         int contentLengthMin;
         int contentLengthMax;
         String contentLengthString = scanner.nextLine();
@@ -48,14 +49,14 @@ public class MultipleWritesExample {
                 throw new IllegalArgumentException();
             }
         } catch (Exception e) {
-            System.out.println("输入的单个任务生成的随机内容的长度不合法, 使用默认值 1024-4096");
+            CT.trace("输入的单个任务生成的随机内容的长度不合法, 使用默认值 1024-4096");
             contentLengthMin = 1024;
             contentLengthMax = 4096;
         }
 
         // 1. 多次写入内容，写入后读取并对比其 MD5 值。
-        System.out.println();
-        System.out.println("1. 多次写入内容, 写入后读取并对比其 MD5 值...");
+        CT.trace("");
+        CT.trace("1. 多次写入内容, 写入后读取并对比其 MD5 值...");
         String key = temporaryStorageHandler.create();
         for (int i = 0; i < 10; i++) {
             int contentLength = ThreadLocalRandom.current().nextInt(contentLengthMin, contentLengthMax);
@@ -82,10 +83,10 @@ public class MultipleWritesExample {
         scanner.nextLine();
 
         // 2. 清理临时存储。
-        System.out.println();
-        System.out.println("2. 清理临时存储...");
+        CT.trace("");
+        CT.trace("2. 清理临时存储...");
         temporaryStorageHandler.disposeAndRemove(key);
-        System.out.println("示例演示完毕, 感谢您测试与使用!");
+        CT.trace("示例演示完毕, 感谢您测试与使用!");
 
         ctx.stop();
         ctx.close();

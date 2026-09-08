@@ -4,6 +4,13 @@
 
 ### 功能构建
 
+- 优化部分示例的控制台输出方法。
+  - com.dwarfeng.tmpstg.api.integration.example.TelqosExample。
+  - com.dwarfeng.tmpstg.node.example.ConcurrentOperationExample。
+  - com.dwarfeng.tmpstg.node.example.MultipleReadsExample。
+  - com.dwarfeng.tmpstg.node.example.MultipleWritesExample。
+  - com.dwarfeng.tmpstg.node.example.ProcessExample。
+
 - 依赖升级。
   - 升级 `fastjson` 依赖版本为 `1.2.84` 以规避漏洞。
   - 升级 `subgrade` 依赖版本为 `1.9.0.a` 以规避漏洞。

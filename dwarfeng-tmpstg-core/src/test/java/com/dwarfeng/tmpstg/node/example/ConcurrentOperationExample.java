@@ -1,5 +1,6 @@
 package com.dwarfeng.tmpstg.node.example;
 
+import com.dwarfeng.dutil.basic.io.CT;
 import com.dwarfeng.tmpstg.sdk.util.ContentUtil;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 import org.apache.commons.lang3.StringUtils;
@@ -36,16 +37,16 @@ public class ConcurrentOperationExample {
         Scanner scanner = new Scanner(System.in);
 
         // 显示欢迎信息。
-        System.out.println("开发者您好!");
-        System.out.println("这是一个示例, 用于演示 dwarfeng-tmpstg 的功能");
-        System.out.println("该示例将会会生成多个任务同步执行, 每个任务写入一个随机内容后, 等待一段时间, 随后读取内容, " +
+        CT.trace("开发者您好!");
+        CT.trace("这是一个示例, 用于演示 dwarfeng-tmpstg 的功能");
+        CT.trace("该示例将会会生成多个任务同步执行, 每个任务写入一个随机内容后, 等待一段时间, 随后读取内容, " +
                 "并对比两者的 MD5 值");
-        System.out.println("您需要指定生成任务的数量, 单个任务生成的随机内容的长度范围, 单个任务的等待时间的长度范围");
-        System.out.println("单个任务生成的随机内容的长度范围格式为: min-max, 单位为字节");
-        System.out.println("单个任务的等待时间的长度范围格式为: min-max, 单位为毫秒");
+        CT.trace("您需要指定生成任务的数量, 单个任务生成的随机内容的长度范围, 单个任务的等待时间的长度范围");
+        CT.trace("单个任务生成的随机内容的长度范围格式为: min-max, 单位为字节");
+        CT.trace("单个任务的等待时间的长度范围格式为: min-max, 单位为毫秒");
 
         // 获取参数。
-        System.out.println("请指定任务的数量, 默认值为 500: ");
+        CT.trace("请指定任务的数量, 默认值为 500: ");
         int taskCount;
         String taskCountString = scanner.nextLine();
         try {
@@ -54,10 +55,10 @@ public class ConcurrentOperationExample {
                 throw new IllegalArgumentException();
             }
         } catch (Exception e) {
-            System.out.println("输入的任务的数量不合法, 使用默认值 500");
+            CT.trace("输入的任务的数量不合法, 使用默认值 500");
             taskCount = 500;
         }
-        System.out.println("请指定单个任务生成的随机内容的长度, 默认值为 1024-4096");
+        CT.trace("请指定单个任务生成的随机内容的长度, 默认值为 1024-4096");
         int contentLengthMin;
         int contentLengthMax;
         String contentLengthString = scanner.nextLine();
@@ -70,11 +71,11 @@ public class ConcurrentOperationExample {
                 throw new IllegalArgumentException();
             }
         } catch (Exception e) {
-            System.out.println("输入的单个任务生成的随机内容的长度不合法, 使用默认值 1024-4096");
+            CT.trace("输入的单个任务生成的随机内容的长度不合法, 使用默认值 1024-4096");
             contentLengthMin = 1024;
             contentLengthMax = 4096;
         }
-        System.out.println("请指定单个任务的等待时间的长度, 默认值为 1000-5000");
+        CT.trace("请指定单个任务的等待时间的长度, 默认值为 1000-5000");
         long taskSleepDurationMin;
         long taskSleepDurationMax;
         String taskSleepDurationString = scanner.nextLine();
@@ -87,14 +88,14 @@ public class ConcurrentOperationExample {
                 throw new IllegalArgumentException();
             }
         } catch (Exception e) {
-            System.out.println("输入的单个任务的等待时间的长度不合法, 使用默认值 1000-5000");
+            CT.trace("输入的单个任务的等待时间的长度不合法, 使用默认值 1000-5000");
             taskSleepDurationMin = 1000;
             taskSleepDurationMax = 5000;
         }
 
         // 1. 生成任务，并同步执行。
-        System.out.println();
-        System.out.println("1. 生成任务, 并同步执行...");
+        CT.trace("");
+        CT.trace("1. 生成任务, 并同步执行...");
         List<Future<?>> futureList = new ArrayList<>(taskCount);
         for (int i = 0; i < taskCount; i++) {
             Task task = new Task(
@@ -107,8 +108,8 @@ public class ConcurrentOperationExample {
         for (Future<?> future : futureList) {
             future.get();
         }
-        System.out.println("所有任务执行完毕!");
-        System.out.println("示例演示完毕, 感谢您测试与使用!");
+        CT.trace("所有任务执行完毕!");
+        CT.trace("示例演示完毕, 感谢您测试与使用!");
 
         ctx.stop();
         ctx.close();
