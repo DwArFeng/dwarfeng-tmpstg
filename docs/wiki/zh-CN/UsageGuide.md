@@ -139,7 +139,7 @@
 
 ### 准备最小化参数
 
-`dwarfeng-tmpstg-core/src/test/resources/tmpstg/tmpstg-settings.properties`：
+`dwarfeng-tmpstg-core/src/test/resources/com/dwarfeng/tmpstg/node/tmpstg/tmpstg-settings.properties`：
 
 ```properties
 # 临时文件目录路径。
@@ -559,7 +559,7 @@ public class FoobarTemporaryStorageFactory {
 ### XSD 配置
 
 从 `2.0.0.a` 版本开始，可以使用 `dwarfeng-tmpstg` 命名空间装配 `TemporaryStorageConfig`、`TemporaryStorageHandler` 与
-`TemporaryStorageQosService`。  
+`TemporaryStorageQosService`。
 在项目的 `application-context-tmpstg.xml` 中追加配置，示例如下:
 
 ```xml
@@ -614,7 +614,7 @@ public class FoobarTemporaryStorageFactory {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
 import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
 
 import java.io.InputStream;
@@ -810,7 +810,7 @@ public class OpenInputStreamSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.dutil.basic.io.IOUtil;
+import com.dwarfeng.dutil.basic.sdk.io.IOUtil;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.ByteArrayOutputStream;
@@ -866,7 +866,7 @@ public class MultipleWriteSnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.dutil.basic.io.IOUtil;
+import com.dwarfeng.dutil.basic.sdk.io.IOUtil;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.*;
@@ -1082,8 +1082,8 @@ public class DirectKeySnippet {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.basic.sdk.exception.HandlerExceptionHelper;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
 import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
@@ -1313,7 +1313,7 @@ public class FoobarTemporaryFileHandler {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.OutputStream;
@@ -1403,7 +1403,7 @@ public class FoobarFacade {
 ```java
 package com.example.foobar;
 
-import com.dwarfeng.dutil.basic.io.IOUtil;
+import com.dwarfeng.dutil.basic.sdk.io.IOUtil;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
 import java.io.*;

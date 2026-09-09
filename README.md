@@ -27,9 +27,9 @@ Dwarfeng（赵扶风）的临时存储服务，基于 `subgrade` 项目，使用
 
 运行 `dwarfeng-tmpstg-api/src/test` 下的示例以观察 API 扩展特性。
 
-| 示例类名                                                  | 说明                                           |
-|-----------------------------------------------------------|------------------------------------------------|
-| com.dwarfeng.tmpstg.api.integration.example.TelqosExample | Telqos 示例：通过运维指令操作临时存储 QoS 服务 |
+| 示例类名                                      | 说明                                           |
+|-----------------------------------------------|------------------------------------------------|
+| com.dwarfeng.tmpstg.api.example.TelqosExample | Telqos 示例：通过运维指令操作临时存储 QoS 服务 |
 
 ## 文档
 
@@ -130,7 +130,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 ### 多实例模式
 
-不使用包扫描，使用 xml 或者配置类生成 `TemporaryStorageHandlerImpl` 实例。  
+不使用包扫描，使用 xml 或者配置类生成 `TemporaryStorageHandlerImpl` 实例。
 在项目的 `bean-definition.xml` 中追加配置，示例如下:
 
 ```xml
@@ -181,7 +181,8 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 ### XSD 配置
 
-从 `2.0.0.a` 版本开始，可以使用 `dwarfeng-tmpstg` 命名空间装配 `TemporaryStorageConfig`、`TemporaryStorageHandler` 与 `TemporaryStorageQosService`。  
+从 `2.0.0.a` 版本开始，可以使用 `dwarfeng-tmpstg` 命名空间装配 `TemporaryStorageConfig`、`TemporaryStorageHandler`
+与 `TemporaryStorageQosService`。
 在项目的 `application-context-tmpstg.xml` 中追加配置，示例如下:
 
 ```xml

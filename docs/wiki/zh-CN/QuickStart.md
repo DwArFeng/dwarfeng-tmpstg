@@ -35,9 +35,11 @@ git clone git@gitee.com:dwarfeng/dwarfeng-tmpstg.git
 
 在下载的源码目录下，新建 `conf/test.tmpstg` 目录。
 
-运行 core 示例时，将 `dwarfeng-tmpstg-core/src/test/resources/tmpstg/tmpstg-settings.properties` 文件复制到新建好的目录下；
-运行 API 示例时，将 `dwarfeng-tmpstg-api/src/test/resources/tmpstg/tmpstg-settings.properties` 文件复制到新建好的目录下，
-并按照注释按需修改配置项。
+运行 core 示例时，将
+`dwarfeng-tmpstg-core/src/test/resources/com/dwarfeng/tmpstg/node/tmpstg/tmpstg-settings.properties`
+文件复制到新建好的目录下；运行 API 示例时，将
+`dwarfeng-tmpstg-api/src/test/resources/com/dwarfeng/tmpstg/api/tmpstg/tmpstg-settings.properties`
+文件复制到新建好的目录下，并按照注释按需修改配置项。
 
 ## 效果体验
 
@@ -52,6 +54,6 @@ git clone git@gitee.com:dwarfeng/dwarfeng-tmpstg.git
 
 运行 `dwarfeng-tmpstg-api/src/test` 下的示例以观察 API 扩展特性。
 
-| 示例类名                                                  | 说明                                           |
-|-----------------------------------------------------------|------------------------------------------------|
-| com.dwarfeng.tmpstg.api.integration.example.TelqosExample | Telqos 示例：通过运维指令操作临时存储 QoS 服务 |
+| 示例类名                                      | 说明                                           |
+|-----------------------------------------------|------------------------------------------------|
+| com.dwarfeng.tmpstg.api.example.TelqosExample | Telqos 示例：通过运维指令操作临时存储 QoS 服务 |
