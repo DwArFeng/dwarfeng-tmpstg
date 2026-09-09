@@ -1,5 +1,7 @@
 package com.dwarfeng.tmpstg.stack.exception;
 
+import java.io.Serial;
+
 /**
  * 没有临时存储处理器异常。
  *
@@ -8,6 +10,7 @@ package com.dwarfeng.tmpstg.stack.exception;
  */
 public class NoTemporaryStorageHandlerPresentException extends TemporaryStorageQosException {
 
+    @Serial
     private static final long serialVersionUID = 2254229881778100431L;
 
     public NoTemporaryStorageHandlerPresentException() {

@@ -1,21 +1,21 @@
 package com.dwarfeng.tmpstg.impl.handler;
 
-import com.dwarfeng.dutil.basic.io.IOUtil;
+import com.dwarfeng.dutil.basic.sdk.io.IOUtil;
 import com.dwarfeng.tmpstg.sdk.util.Constants;
 import com.dwarfeng.tmpstg.sdk.util.ContentUtil;
 import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
 import com.dwarfeng.tmpstg.stack.exception.TemporaryStorageInvalidStatusException;
 import com.dwarfeng.tmpstg.stack.exception.TemporaryStorageNotExistsException;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -25,15 +25,15 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Future;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring/application-context*.xml")
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = "classpath:com/dwarfeng/tmpstg/node/spring/application-context*.xml")
 public class TemporaryStorageHandlerImplTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TemporaryStorageHandlerImplTest.class);
 
-    private static final String SPEL_DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE = "${tmpstg.max_buffer_size_per_storage:" +
+    private static final String SPEL_MAX_BUFFER_SIZE_PER_STORAGE = "${tmpstg.max_buffer_size_per_storage:" +
             "#{T(com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig$Builder)" +
             ".DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE}}";
 
@@ -44,7 +44,7 @@ public class TemporaryStorageHandlerImplTest {
     private ThreadPoolTaskExecutor executor;
 
     // SPEL 太长，故使用常量缩短长度。
-    @Value(SPEL_DEFAULT_MAX_BUFFER_SIZE_PER_STORAGE)
+    @Value(SPEL_MAX_BUFFER_SIZE_PER_STORAGE)
     private int maxBufferSizePerStorage;
 
     // region 读写测试

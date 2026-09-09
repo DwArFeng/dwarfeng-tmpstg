@@ -313,7 +313,8 @@
                     </xsd:documentation>
                     <xsd:appinfo>
                         <tool:annotation kind="ref">
-                            <tool:expected-type type="com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper"/>
+                            <tool:expected-type
+                                    type="com.dwarfeng.subgrade.basic.stack.exception.ServiceExceptionMapper"/>
                         </tool:annotation>
                     </xsd:appinfo>
                 </xsd:annotation>

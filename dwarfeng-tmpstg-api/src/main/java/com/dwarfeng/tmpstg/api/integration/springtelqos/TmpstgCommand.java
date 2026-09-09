@@ -1,6 +1,6 @@
 package com.dwarfeng.tmpstg.api.integration.springtelqos;
 
-import com.dwarfeng.dutil.basic.io.IOUtil;
+import com.dwarfeng.dutil.basic.sdk.io.IOUtil;
 import com.dwarfeng.springtelqos.sdk.command.CliCommand;
 import com.dwarfeng.springtelqos.sdk.configuration.TelqosCommand;
 import com.dwarfeng.springtelqos.sdk.util.CliCommandUtil;
@@ -13,7 +13,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -154,45 +155,45 @@ public class TmpstgCommand extends CliCommand {
         List<Option> list = new ArrayList<>();
         list.add(
                 Option.builder(COMMAND_OPTION_LIST_HANDLERS).longOpt(COMMAND_OPTION_LIST_HANDLERS_LONG_OPT)
-                        .optionalArg(true).hasArg(false).desc("列出所有可用的临时存储处理器").build()
+                        .optionalArg(true).hasArg(false).desc("列出所有可用的临时存储处理器").get()
         );
         list.add(
                 Option.builder(COMMAND_OPTION_IS_STARTED).longOpt(COMMAND_OPTION_IS_STARTED_LONG_OPT)
-                        .optionalArg(true).hasArg(false).desc("查看处理器是否已启动").build()
+                        .optionalArg(true).hasArg(false).desc("查看处理器是否已启动").get()
         );
-        list.add(Option.builder(COMMAND_OPTION_START).optionalArg(true).hasArg(false).desc("启动处理器").build());
-        list.add(Option.builder(COMMAND_OPTION_STOP).optionalArg(true).hasArg(false).desc("停止处理器").build());
-        list.add(Option.builder(COMMAND_OPTION_KEYS).optionalArg(true).hasArg(false).desc("列出临时存储键").build());
-        list.add(Option.builder(COMMAND_OPTION_EXISTS).optionalArg(true).hasArg(false).desc("判断指定键是否存在").build());
-        list.add(Option.builder(COMMAND_OPTION_INSPECT).optionalArg(true).hasArg(false).desc("查看临时存储信息").build());
-        list.add(Option.builder(COMMAND_OPTION_CREATE).optionalArg(true).hasArg(false).desc("创建新的临时存储").build());
-        list.add(Option.builder(COMMAND_OPTION_DISPOSE).optionalArg(true).hasArg(false).desc("释放临时存储").build());
-        list.add(Option.builder(COMMAND_OPTION_REMOVE).optionalArg(true).hasArg(false).desc("移除临时存储").build());
+        list.add(Option.builder(COMMAND_OPTION_START).optionalArg(true).hasArg(false).desc("启动处理器").get());
+        list.add(Option.builder(COMMAND_OPTION_STOP).optionalArg(true).hasArg(false).desc("停止处理器").get());
+        list.add(Option.builder(COMMAND_OPTION_KEYS).optionalArg(true).hasArg(false).desc("列出临时存储键").get());
+        list.add(Option.builder(COMMAND_OPTION_EXISTS).optionalArg(true).hasArg(false).desc("判断指定键是否存在").get());
+        list.add(Option.builder(COMMAND_OPTION_INSPECT).optionalArg(true).hasArg(false).desc("查看临时存储信息").get());
+        list.add(Option.builder(COMMAND_OPTION_CREATE).optionalArg(true).hasArg(false).desc("创建新的临时存储").get());
+        list.add(Option.builder(COMMAND_OPTION_DISPOSE).optionalArg(true).hasArg(false).desc("释放临时存储").get());
+        list.add(Option.builder(COMMAND_OPTION_REMOVE).optionalArg(true).hasArg(false).desc("移除临时存储").get());
         list.add(
                 Option.builder(COMMAND_OPTION_REMOVE_IF_DISPOSED)
                         .longOpt(COMMAND_OPTION_REMOVE_IF_DISPOSED_LONG_OPT)
-                        .optionalArg(true).hasArg(false).desc("按状态移除临时存储").build()
+                        .optionalArg(true).hasArg(false).desc("按状态移除临时存储").get()
         );
         list.add(
                 Option.builder(COMMAND_OPTION_DISPOSE_AND_REMOVE)
                         .longOpt(COMMAND_OPTION_DISPOSE_AND_REMOVE_LONG_OPT)
-                        .optionalArg(true).hasArg(false).desc("释放并移除临时存储").build()
+                        .optionalArg(true).hasArg(false).desc("释放并移除临时存储").get()
         );
         list.add(
                 Option.builder(COMMAND_OPTION_CLEAR_DISPOSED)
                         .longOpt(COMMAND_OPTION_CLEAR_DISPOSED_LONG_OPT)
-                        .optionalArg(true).hasArg(false).desc("清除已释放的临时存储").build()
+                        .optionalArg(true).hasArg(false).desc("清除已释放的临时存储").get()
         );
-        list.add(Option.builder(COMMAND_OPTION_DOWNLOAD).optionalArg(true).hasArg(false).desc("下载临时存储内容").build());
-        list.add(Option.builder(COMMAND_OPTION_UPLOAD).optionalArg(true).hasArg(false).desc("上传临时存储内容").build());
+        list.add(Option.builder(COMMAND_OPTION_DOWNLOAD).optionalArg(true).hasArg(false).desc("下载临时存储内容").get());
+        list.add(Option.builder(COMMAND_OPTION_UPLOAD).optionalArg(true).hasArg(false).desc("上传临时存储内容").get());
         list.add(
                 Option.builder(COMMAND_SUB_OPTION_HANDLER_NAME).longOpt(COMMAND_SUB_OPTION_HANDLER_NAME_LONG_OPT)
-                        .hasArg(true).type(String.class).desc("处理器名称").build()
+                        .hasArg(true).type(String.class).desc("处理器名称").get()
         );
-        list.add(Option.builder(COMMAND_SUB_OPTION_KEY).hasArg(true).type(String.class).desc("临时存储键").build());
+        list.add(Option.builder(COMMAND_SUB_OPTION_KEY).hasArg(true).type(String.class).desc("临时存储键").get());
         list.add(
                 Option.builder(COMMAND_SUB_OPTION_FILE_PATH).longOpt(COMMAND_SUB_OPTION_FILE_PATH_LONG_OPT)
-                        .hasArg(true).type(String.class).desc("文件路径").build()
+                        .hasArg(true).type(String.class).desc("文件路径").get()
         );
         return list;
     }
@@ -516,7 +517,7 @@ public class TmpstgCommand extends CliCommand {
 
     private String parseKey(CommandExecutor.Context context, CommandLine cmd) throws Exception {
         if (cmd.hasOption(COMMAND_SUB_OPTION_KEY)) {
-            String key = StringUtils.trim((String) cmd.getParsedOptionValue(COMMAND_SUB_OPTION_KEY));
+            String key = StringUtils.trim(cmd.getParsedOptionValue(COMMAND_SUB_OPTION_KEY));
             if (StringUtils.isNotEmpty(key)) {
                 return key;
             }
@@ -527,7 +528,7 @@ public class TmpstgCommand extends CliCommand {
 
     private String parseFilePath(CommandExecutor.Context context, CommandLine cmd) throws Exception {
         if (cmd.hasOption(COMMAND_SUB_OPTION_FILE_PATH)) {
-            String filePath = StringUtils.trim((String) cmd.getParsedOptionValue(COMMAND_SUB_OPTION_FILE_PATH));
+            String filePath = StringUtils.trim(cmd.getParsedOptionValue(COMMAND_SUB_OPTION_FILE_PATH));
             if (StringUtils.isNotEmpty(filePath)) {
                 return filePath;
             }

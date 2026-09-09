@@ -1,22 +1,21 @@
 package com.dwarfeng.tmpstg.impl.handler;
 
-import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.basic.sdk.exception.HandlerExceptionHelper;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
 import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
 import com.dwarfeng.tmpstg.stack.exception.AmbiguousTemporaryStorageHandlerException;
 import com.dwarfeng.tmpstg.stack.exception.NoTemporaryStorageHandlerPresentException;
 import com.dwarfeng.tmpstg.stack.exception.TemporaryStorageHandlerNotFoundException;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageQosHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 临时存储 QoS 处理器实现。
@@ -38,10 +37,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     @Override
     public List<String> listHandlerNames() throws HandlerException {
         try {
-            List<String> handlerNames = temporaryStorageHandlerMap.keySet().stream()
-                    .sorted()
-                    .collect(Collectors.toList());
-            return Collections.unmodifiableList(handlerNames);
+            return temporaryStorageHandlerMap.keySet().stream().sorted().toList();
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
@@ -100,7 +96,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     }
 
     @Override
-    public boolean exists(@Nullable String handlerName, @Nonnull String key) throws HandlerException {
+    public boolean exists(@Nullable String handlerName, @NotNull String key) throws HandlerException {
         try {
             return determineHandler(handlerName).exists(key);
         } catch (Exception e) {
@@ -109,7 +105,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     }
 
     @Override
-    public TemporaryStorageInfo inspect(@Nullable String handlerName, @Nonnull String key) throws HandlerException {
+    public TemporaryStorageInfo inspect(@Nullable String handlerName, @NotNull String key) throws HandlerException {
         try {
             return determineHandler(handlerName).inspect(key);
         } catch (Exception e) {
@@ -127,7 +123,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     }
 
     @Override
-    public InputStream openInputStream(@Nullable String handlerName, @Nonnull String key) throws HandlerException {
+    public InputStream openInputStream(@Nullable String handlerName, @NotNull String key) throws HandlerException {
         try {
             return determineHandler(handlerName).openInputStream(key);
         } catch (Exception e) {
@@ -136,7 +132,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     }
 
     @Override
-    public OutputStream openOutputStream(@Nullable String handlerName, @Nonnull String key) throws HandlerException {
+    public OutputStream openOutputStream(@Nullable String handlerName, @NotNull String key) throws HandlerException {
         try {
             return determineHandler(handlerName).openOutputStream(key);
         } catch (Exception e) {
@@ -146,7 +142,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
 
     @Override
     public OutputStream openOutputStream(
-            @Nullable String handlerName, @Nonnull String key, long expectedLength
+            @Nullable String handlerName, @NotNull String key, long expectedLength
     ) throws HandlerException {
         try {
             return determineHandler(handlerName).openOutputStream(key, expectedLength);
@@ -156,7 +152,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     }
 
     @Override
-    public void dispose(@Nullable String handlerName, @Nonnull String key) throws HandlerException {
+    public void dispose(@Nullable String handlerName, @NotNull String key) throws HandlerException {
         try {
             determineHandler(handlerName).dispose(key);
         } catch (Exception e) {
@@ -165,7 +161,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     }
 
     @Override
-    public void remove(@Nullable String handlerName, @Nonnull String key) throws HandlerException {
+    public void remove(@Nullable String handlerName, @NotNull String key) throws HandlerException {
         try {
             determineHandler(handlerName).remove(key);
         } catch (Exception e) {
@@ -174,7 +170,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     }
 
     @Override
-    public boolean removeIfDisposed(@Nullable String handlerName, @Nonnull String key) throws HandlerException {
+    public boolean removeIfDisposed(@Nullable String handlerName, @NotNull String key) throws HandlerException {
         try {
             return determineHandler(handlerName).removeIfDisposed(key);
         } catch (Exception e) {
@@ -183,7 +179,7 @@ public class TemporaryStorageQosHandlerImpl implements TemporaryStorageQosHandle
     }
 
     @Override
-    public void disposeAndRemove(@Nullable String handlerName, @Nonnull String key) throws HandlerException {
+    public void disposeAndRemove(@Nullable String handlerName, @NotNull String key) throws HandlerException {
         try {
             determineHandler(handlerName).disposeAndRemove(key);
         } catch (Exception e) {

@@ -1,5 +1,7 @@
 package com.dwarfeng.tmpstg.stack.exception;
 
+import java.io.Serial;
+
 /**
  * 临时存储处理器歧义异常。
  *
@@ -8,6 +10,7 @@ package com.dwarfeng.tmpstg.stack.exception;
  */
 public class AmbiguousTemporaryStorageHandlerException extends TemporaryStorageQosException {
 
+    @Serial
     private static final long serialVersionUID = -4571857396258017840L;
 
     public AmbiguousTemporaryStorageHandlerException() {

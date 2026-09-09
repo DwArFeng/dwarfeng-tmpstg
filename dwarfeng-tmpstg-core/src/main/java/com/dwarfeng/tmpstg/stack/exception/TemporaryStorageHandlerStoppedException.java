@@ -1,5 +1,7 @@
 package com.dwarfeng.tmpstg.stack.exception;
 
+import java.io.Serial;
+
 /**
  * 临时存储处理器停止异常。
  *
@@ -8,6 +10,7 @@ package com.dwarfeng.tmpstg.stack.exception;
  */
 public class TemporaryStorageHandlerStoppedException extends TemporaryStorageException {
 
+    @Serial
     private static final long serialVersionUID = 1577967064408199816L;
 
     public TemporaryStorageHandlerStoppedException() {

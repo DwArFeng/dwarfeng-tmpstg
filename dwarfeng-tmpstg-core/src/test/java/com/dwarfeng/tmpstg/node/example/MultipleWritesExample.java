@@ -1,6 +1,6 @@
 package com.dwarfeng.tmpstg.node.example;
 
-import com.dwarfeng.dutil.basic.io.CT;
+import com.dwarfeng.dutil.basic.sdk.io.CT;
 import com.dwarfeng.tmpstg.sdk.util.ContentUtil;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 import org.apache.commons.lang3.StringUtils;
@@ -19,9 +19,9 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class MultipleWritesExample {
 
-    public static void main(String[] args) throws Exception {
+    static void main(String[] args) throws Exception {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-                "classpath:spring/application-context*.xml"
+                "classpath:com/dwarfeng/tmpstg/node/spring/application-context*.xml"
         );
         ctx.registerShutdownHook();
         ctx.start();

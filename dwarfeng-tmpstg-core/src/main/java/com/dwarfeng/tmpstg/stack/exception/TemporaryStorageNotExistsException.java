@@ -1,5 +1,7 @@
 package com.dwarfeng.tmpstg.stack.exception;
 
+import java.io.Serial;
+
 /**
  * 临时存储不存在异常。
  *
@@ -8,6 +10,7 @@ package com.dwarfeng.tmpstg.stack.exception;
  */
 public class TemporaryStorageNotExistsException extends TemporaryStorageException {
 
+    @Serial
     private static final long serialVersionUID = -2736311914304382070L;
 
     private final String key;

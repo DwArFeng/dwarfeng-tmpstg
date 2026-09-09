@@ -1,9 +1,9 @@
 package com.dwarfeng.tmpstg.impl.handler;
 
-import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
-import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
-import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.aop.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.aop.sdk.interceptor.analyse.SkipRecord;
+import com.dwarfeng.subgrade.basic.sdk.exception.HandlerExceptionHelper;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
 import com.dwarfeng.tmpstg.sdk.util.Constants;
 import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
 import com.dwarfeng.tmpstg.stack.exception.TemporaryStorageHandlerStoppedException;
@@ -12,17 +12,18 @@ import com.dwarfeng.tmpstg.stack.exception.TemporaryStorageNotExistsException;
 import com.dwarfeng.tmpstg.stack.exception.TemporaryStorageStreamOpenException;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 import com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.locks.Lock;
@@ -56,8 +57,8 @@ public class TemporaryStorageHandlerImpl implements TemporaryStorageHandler {
     private boolean startedFlag = false;
 
     public TemporaryStorageHandlerImpl(
-            @Nonnull ThreadPoolTaskScheduler scheduler,
-            @Nonnull TemporaryStorageConfig config
+            @NotNull ThreadPoolTaskScheduler scheduler,
+            @NotNull TemporaryStorageConfig config
     ) {
         this.scheduler = scheduler;
         this.config = config;
@@ -85,13 +86,13 @@ public class TemporaryStorageHandlerImpl implements TemporaryStorageHandler {
 
             if (config.getClearDisposedInterval() > 0) {
                 clearDisposedTaskFuture = scheduler.scheduleAtFixedRate(
-                        this::clearDisposedTask, config.getClearDisposedInterval()
+                        this::clearDisposedTask, Duration.ofMillis(config.getClearDisposedInterval())
                 );
             }
 
             if (config.getCheckMemoryInterval() > 0) {
                 checkMemoryTaskFuture = scheduler.scheduleAtFixedRate(
-                        this::checkMemoryTask, config.getCheckMemoryInterval()
+                        this::checkMemoryTask, Duration.ofMillis(config.getCheckMemoryInterval())
                 );
             }
 
@@ -781,13 +782,13 @@ public class TemporaryStorageHandlerImpl implements TemporaryStorageHandler {
         }
 
         @Override
-        public int read(@Nonnull byte[] b, int off, int len) throws IOException {
+        public int read(byte @NotNull [] b, int off, int len) throws IOException {
             makeSureOpen("流已经关闭");
             return internalRead(b, off, len);
         }
 
         @Override
-        public int read(@Nonnull byte[] b) throws IOException {
+        public int read(byte @NotNull [] b) throws IOException {
             makeSureOpen("流已经关闭");
             return internalRead(b, 0, b.length);
         }
@@ -940,13 +941,13 @@ public class TemporaryStorageHandlerImpl implements TemporaryStorageHandler {
         }
 
         @Override
-        public void write(@Nonnull byte[] b, int off, int len) throws IOException {
+        public void write(byte @NotNull [] b, int off, int len) throws IOException {
             makeSureOpen("流已经关闭");
             internalWrite(b, off, len);
         }
 
         @Override
-        public void write(@Nonnull byte[] b) throws IOException {
+        public void write(byte @NotNull [] b) throws IOException {
             makeSureOpen("流已经关闭");
             internalWrite(b, 0, b.length);
         }

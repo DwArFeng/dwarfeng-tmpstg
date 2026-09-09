@@ -1,6 +1,8 @@
 package com.dwarfeng.tmpstg.stack.exception;
 
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
+
+import java.io.Serial;
 
 /**
  * 临时存储 QoS 异常。
@@ -10,6 +12,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  */
 public class TemporaryStorageQosException extends HandlerException {
 
+    @Serial
     private static final long serialVersionUID = 2391061022170965724L;
 
     public TemporaryStorageQosException() {

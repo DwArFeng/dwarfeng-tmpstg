@@ -1,6 +1,6 @@
 package com.dwarfeng.tmpstg.node.example;
 
-import com.dwarfeng.dutil.basic.io.CT;
+import com.dwarfeng.dutil.basic.sdk.io.CT;
 import com.dwarfeng.tmpstg.sdk.util.ContentUtil;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 import org.apache.commons.lang3.StringUtils;
@@ -23,9 +23,9 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class ConcurrentOperationExample {
 
-    public static void main(String[] args) throws Exception {
+    static void main(String[] args) throws Exception {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-                "classpath:spring/application-context*.xml"
+                "classpath:com/dwarfeng/tmpstg/node/spring/application-context*.xml"
         );
         ctx.registerShutdownHook();
         ctx.start();
@@ -116,61 +116,42 @@ public class ConcurrentOperationExample {
         System.exit(0);
     }
 
-    private static class Task implements Runnable {
-
-        private final TemporaryStorageHandler temporaryStorageHandler;
-
-        private final int index;
-
-        private final int contentLengthMin;
-        private final int contentLengthMax;
-        private final long taskSleepDurationMin;
-        private final long taskSleepDurationMax;
-
-        public Task(
-                TemporaryStorageHandler temporaryStorageHandler, int index,
-                int contentLengthMin, int contentLengthMax, long taskSleepDurationMin, long taskSleepDurationMax
-        ) {
-            this.temporaryStorageHandler = temporaryStorageHandler;
-            this.index = index;
-            this.contentLengthMin = contentLengthMin;
-            this.contentLengthMax = contentLengthMax;
-            this.taskSleepDurationMin = taskSleepDurationMin;
-            this.taskSleepDurationMax = taskSleepDurationMax;
-        }
+    private record Task(TemporaryStorageHandler temporaryStorageHandler, int index, int contentLengthMin,
+                        int contentLengthMax, long taskSleepDurationMin,
+                        long taskSleepDurationMax) implements Runnable {
 
         @SuppressWarnings("CallToPrintStackTrace")
-        @Override
-        public void run() {
-            try {
-                int contentLength = ThreadLocalRandom.current().nextInt(contentLengthMin, contentLengthMax);
-                byte[] content = ContentUtil.randomContent(contentLength);
-                String contentMd5 = ContentUtil.md5Checksum(content);
-                System.out.printf("任务 %d: 生成的内容的 MD5 值为 %s%n", index, contentMd5);
-                String key = temporaryStorageHandler.create();
-                try (OutputStream out = temporaryStorageHandler.openOutputStream(key, contentLength)) {
-                    out.write(content);
+            @Override
+            public void run() {
+                try {
+                    int contentLength = ThreadLocalRandom.current().nextInt(contentLengthMin, contentLengthMax);
+                    byte[] content = ContentUtil.randomContent(contentLength);
+                    String contentMd5 = ContentUtil.md5Checksum(content);
+                    System.out.printf("任务 %d: 生成的内容的 MD5 值为 %s%n", index, contentMd5);
+                    String key = temporaryStorageHandler.create();
+                    try (OutputStream out = temporaryStorageHandler.openOutputStream(key, contentLength)) {
+                        out.write(content);
+                    }
+                    long taskSleepDuration = ThreadLocalRandom.current().nextLong(
+                            taskSleepDurationMin, taskSleepDurationMax
+                    );
+                    System.out.printf("任务 %d: 休眠 %d 毫秒...%n", index, taskSleepDuration);
+                    byte[] readContent = new byte[contentLength];
+                    try (InputStream in = temporaryStorageHandler.openInputStream(key)) {
+                        int ignored = in.read(readContent);
+                    }
+                    String readContentMd5 = ContentUtil.md5Checksum(readContent);
+                    if (contentMd5.equals(readContentMd5)) {
+                        System.out.printf("任务 %d: 读取内容并比对 MD5 值, 相等!%n", index);
+                    } else {
+                        System.out.printf("任务 %d: 读取内容并比对 MD5 值, 不相等!%n", index);
+                    }
+                    System.out.printf("任务 %d: 清理临时存储...%n", index);
+                    temporaryStorageHandler.disposeAndRemove(key);
+                } catch (Exception e) {
+                    System.err.printf("任务 %d: 执行时发生异常, 异常信息如下: ", index);
+                    e.printStackTrace();
                 }
-                long taskSleepDuration = ThreadLocalRandom.current().nextLong(
-                        taskSleepDurationMin, taskSleepDurationMax
-                );
-                System.out.printf("任务 %d: 休眠 %d 毫秒...%n", index, taskSleepDuration);
-                byte[] readContent = new byte[contentLength];
-                try (InputStream in = temporaryStorageHandler.openInputStream(key)) {
-                    int ignored = in.read(readContent);
-                }
-                String readContentMd5 = ContentUtil.md5Checksum(readContent);
-                if (contentMd5.equals(readContentMd5)) {
-                    System.out.printf("任务 %d: 读取内容并比对 MD5 值, 相等!%n", index);
-                } else {
-                    System.out.printf("任务 %d: 读取内容并比对 MD5 值, 不相等!%n", index);
-                }
-                System.out.printf("任务 %d: 清理临时存储...%n", index);
-                temporaryStorageHandler.disposeAndRemove(key);
-            } catch (Exception e) {
-                System.err.printf("任务 %d: 执行时发生异常, 异常信息如下: ", index);
-                e.printStackTrace();
             }
         }
-    }
 }

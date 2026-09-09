@@ -21,81 +21,98 @@
         <!-- 进行工程编码声明 -->
         <!-- 进行 JDK 版本声明 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <!-- 进行资源的统一声明 -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.release>25</maven.compiler.release>
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
-        <junit.version>4.13.2</junit.version>
-        <spring.version>5.3.39</spring.version>
-        <log4j2.version>2.25.4</log4j2.version>
-        <slf4j.version>1.7.36</slf4j.version>
-        <fastjson.version>1.2.84</fastjson.version>
-        <dutil.version>0.4.2.a-beta</dutil.version>
-        <subgrade.version>1.9.0.a</subgrade.version>
-        <spring-telqos.version>2.0.3.a</spring-telqos.version>
+        <jetbrains-annotations.version>26.1.0</jetbrains-annotations.version>
+        <junit.version>6.1.2</junit.version>
+        <slf4j.version>2.0.18</slf4j.version>
+        <log4j2.version>2.26.1</log4j2.version>
+        <jakarta-annotation.version>3.0.0</jakarta-annotation.version>
+        <commons-cli.version>1.11.0</commons-cli.version>
+        <commons-lang3.version>3.20.0</commons-lang3.version>
+        <spring-framework.version>7.0.8</spring-framework.version>
+        <micrometer-observation.version>1.17.0</micrometer-observation.version>
+        <dutil.version>2.0.1.a</dutil.version>
+        <subgrade.version>2.0.0.a</subgrade.version>
+        <spring-telqos.version>3.0.0.a</spring-telqos.version>
         <!-- Maven 插件版本声明 -->
-        <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
+        <maven-resources-plugin.version>3.4.0</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+        <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+        <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
+        <maven-dependency-plugin.version>3.9.0</maven-dependency-plugin.version>
+        <!-- Surefire 参数定义 -->
+        <project.surefire.skip>true</project.surefire.skip>
     </properties>
 
     <!-- 声明资源的坐标 -->
     <!-- 只定义依赖的版本，并不实际依赖 -->
     <dependencyManagement>
         <dependencies>
+            <!-- JetBrains 静态注解 -->
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>${jetbrains-annotations.version}</version>
+            </dependency>
             <!-- 单元测试 -->
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- Spring -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-core</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-beans</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <scope>test</scope>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- 日志处理 -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j-impl</artifactId>
-                <version>${log4j2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>${log4j2.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-            <!-- FastJson 组件 -->
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j2.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-            <!-- Dutil 组件 -->
+            <!-- Jakarta Annotation -->
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>${jakarta-annotation.version}</version>
+            </dependency>
+            <!-- Apache Commons 组件 -->
+            <dependency>
+                <groupId>commons-cli</groupId>
+                <artifactId>commons-cli</artifactId>
+                <version>${commons-cli.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- Spring 框架 -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Micrometer 可观测性组件 -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-observation</artifactId>
+                <version>${micrometer-observation.version}</version>
+            </dependency>
+            <!-- Dutil 工具库 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>dutil-basic</artifactId>
@@ -104,210 +121,18 @@
             <!-- Subgrade 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>subgrade-stack</artifactId>
+                <artifactId>subgrade-basic</artifactId>
                 <version>${subgrade.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>subgrade-sdk</artifactId>
+                <artifactId>subgrade-aop</artifactId>
                 <version>${subgrade.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>commons-beanutils</artifactId>
-                        <groupId>commons-beanutils</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>fastjson</artifactId>
-                        <groupId>com.alibaba</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>hibernate-core</artifactId>
-                        <groupId>org.hibernate</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>hibernate-validator</artifactId>
-                        <groupId>org.hibernate.validator</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jaxb-api</artifactId>
-                        <groupId>javax.xml.bind</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>mybatis</artifactId>
-                        <groupId>org.mybatis</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>mybatis-spring</artifactId>
-                        <groupId>org.mybatis</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-orm</artifactId>
-                        <groupId>org.springframework</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>mapstruct</artifactId>
-                        <groupId>org.mapstruct</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>kafka-clients</artifactId>
-                        <groupId>org.apache.kafka</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-kafka</artifactId>
-                        <groupId>org.springframework.kafka</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jedis</artifactId>
-                        <groupId>redis.clients</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-data-redis</artifactId>
-                        <groupId>org.springframework.data</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>javax.servlet-api</artifactId>
-                        <groupId>javax.servlet</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>dutil-basic</artifactId>
-                        <groupId>com.dwarfeng</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>subgrade-impl</artifactId>
+                <artifactId>subgrade-lifecycle</artifactId>
                 <version>${subgrade.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>FastInfoset</artifactId>
-                        <groupId>com.sun.xml.fastinfoset</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>antlr</artifactId>
-                        <groupId>antlr</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>aspectjweaver</artifactId>
-                        <groupId>org.aspectj</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>byte-buddy</artifactId>
-                        <groupId>net.bytebuddy</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>classmate</artifactId>
-                        <groupId>com.fasterxml</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>commons-beanutils</artifactId>
-                        <groupId>commons-beanutils</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>commons-collections</artifactId>
-                        <groupId>commons-collections</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>commons-logging</artifactId>
-                        <groupId>commons-logging</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>dom4j</artifactId>
-                        <groupId>dom4j</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>dom4j</artifactId>
-                        <groupId>org.dom4j</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>fastjson</artifactId>
-                        <groupId>com.alibaba</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>hibernate-commons-annotations</artifactId>
-                        <groupId>org.hibernate.common</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>hibernate-core</artifactId>
-                        <groupId>org.hibernate</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>hibernate-validator</artifactId>
-                        <groupId>org.hibernate.validator</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>javax.activation-api</artifactId>
-                        <groupId>javax.activation</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jaxb-api</artifactId>
-                        <groupId>javax.xml.bind</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jboss-logging</artifactId>
-                        <groupId>org.jboss.logging</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>lz4-java</artifactId>
-                        <groupId>org.lz4</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>mybatis</artifactId>
-                        <groupId>org.mybatis</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>mybatis-spring</artifactId>
-                        <groupId>org.mybatis</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>snappy-java</artifactId>
-                        <groupId>org.xerial.snappy</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-aop</artifactId>
-                        <groupId>org.springframework</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-aspects</artifactId>
-                        <groupId>org.springframework</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-data-commons</artifactId>
-                        <groupId>org.springframework.data</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-data-keyvalue</artifactId>
-                        <groupId>org.springframework.data</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-jdbc</artifactId>
-                        <groupId>org.springframework</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-orm</artifactId>
-                        <groupId>org.springframework</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>dutil-develop</artifactId>
-                        <groupId>com.dwarfeng</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>netty-all</artifactId>
-                        <groupId>io.netty</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>zookeeper</artifactId>
-                        <groupId>org.apache.zookeeper</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>guava</artifactId>
-                        <groupId>com.google.guava</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>curator-recipes</artifactId>
-                        <groupId>org.apache.curator</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <!-- Spring-telqos 组件 -->
             <dependency>
@@ -318,13 +143,18 @@
             <!-- 程序自身组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
+                <artifactId>dwarfeng-tmpstg-base</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
                 <artifactId>dwarfeng-tmpstg-core</artifactId>
-                <version>3.0.0.a-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>dwarfeng-tmpstg-api</artifactId>
-                <version>3.0.0.a-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -339,19 +169,45 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>${maven-deploy-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
 
     <modules>
+        <module>dwarfeng-tmpstg-base</module>
         <module>dwarfeng-tmpstg-core</module>
         <module>dwarfeng-tmpstg-api</module>
     </modules>

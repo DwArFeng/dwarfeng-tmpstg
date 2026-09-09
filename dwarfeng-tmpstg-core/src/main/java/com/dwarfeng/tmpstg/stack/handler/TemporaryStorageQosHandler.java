@@ -1,10 +1,11 @@
 package com.dwarfeng.tmpstg.stack.handler;
 
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
 import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
@@ -88,7 +89,7 @@ public interface TemporaryStorageQosHandler {
      * @return 指定的键是否存在。
      * @throws HandlerException 处理器异常。
      */
-    boolean exists(@Nullable String handlerName, @Nonnull String key) throws HandlerException;
+    boolean exists(@Nullable String handlerName, @NotNull String key) throws HandlerException;
 
     /**
      * 获取指定键对应的临时存储信息。
@@ -98,7 +99,7 @@ public interface TemporaryStorageQosHandler {
      * @return 指定键对应的临时存储信息。
      * @throws HandlerException 处理器异常。
      */
-    TemporaryStorageInfo inspect(@Nullable String handlerName, @Nonnull String key) throws HandlerException;
+    TemporaryStorageInfo inspect(@Nullable String handlerName, @NotNull String key) throws HandlerException;
 
     /**
      * 创建一个新的临时存储。
@@ -117,7 +118,7 @@ public interface TemporaryStorageQosHandler {
      * @return 指定键对应的输入流。
      * @throws HandlerException 处理器异常。
      */
-    InputStream openInputStream(@Nullable String handlerName, @Nonnull String key) throws HandlerException;
+    InputStream openInputStream(@Nullable String handlerName, @NotNull String key) throws HandlerException;
 
     /**
      * 打开指定键对应的输出流。
@@ -128,7 +129,7 @@ public interface TemporaryStorageQosHandler {
      * @throws HandlerException 处理器异常。
      * @see #openOutputStream(String, String, long)
      */
-    OutputStream openOutputStream(@Nullable String handlerName, @Nonnull String key) throws HandlerException;
+    OutputStream openOutputStream(@Nullable String handlerName, @NotNull String key) throws HandlerException;
 
     /**
      * 打开指定键对应的输出流。
@@ -141,7 +142,7 @@ public interface TemporaryStorageQosHandler {
      * @see #openOutputStream(String, String)
      */
     OutputStream openOutputStream(
-            @Nullable String handlerName, @Nonnull String key, long expectedLength
+            @Nullable String handlerName, @NotNull String key, long expectedLength
     ) throws HandlerException;
 
     /**
@@ -151,7 +152,7 @@ public interface TemporaryStorageQosHandler {
      * @param key         指定的键。
      * @throws HandlerException 处理器异常。
      */
-    void dispose(@Nullable String handlerName, @Nonnull String key) throws HandlerException;
+    void dispose(@Nullable String handlerName, @NotNull String key) throws HandlerException;
 
     /**
      * 移除指定键对应的临时存储。
@@ -160,7 +161,7 @@ public interface TemporaryStorageQosHandler {
      * @param key         指定的键。
      * @throws HandlerException 处理器异常。
      */
-    void remove(@Nullable String handlerName, @Nonnull String key) throws HandlerException;
+    void remove(@Nullable String handlerName, @NotNull String key) throws HandlerException;
 
     /**
      * 如果指定的键对应的临时存储已释放，则移除该临时存储。
@@ -170,7 +171,7 @@ public interface TemporaryStorageQosHandler {
      * @return 如果移除成功，则返回 <code>true</code>，否则返回 <code>false</code>。
      * @throws HandlerException 处理器异常。
      */
-    boolean removeIfDisposed(@Nullable String handlerName, @Nonnull String key) throws HandlerException;
+    boolean removeIfDisposed(@Nullable String handlerName, @NotNull String key) throws HandlerException;
 
     /**
      * 释放并移除指定键对应的临时存储。
@@ -179,7 +180,7 @@ public interface TemporaryStorageQosHandler {
      * @param key         指定的键。
      * @throws HandlerException 处理器异常。
      */
-    void disposeAndRemove(@Nullable String handlerName, @Nonnull String key) throws HandlerException;
+    void disposeAndRemove(@Nullable String handlerName, @NotNull String key) throws HandlerException;
 
     /**
      * 清除处理器中已释放的临时存储。

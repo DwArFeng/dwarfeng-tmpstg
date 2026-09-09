@@ -1,6 +1,8 @@
 package com.dwarfeng.tmpstg.stack.bean.dto;
 
-import com.dwarfeng.subgrade.stack.bean.dto.Dto;
+import com.dwarfeng.subgrade.basic.stack.bean.dto.Dto;
+
+import java.io.Serial;
 
 /**
  * 临时存储信息。
@@ -10,7 +12,8 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
  */
 public class TemporaryStorageInfo implements Dto {
 
-    private static final long serialVersionUID = 2893993705400905651L;
+    @Serial
+    private static final long serialVersionUID = 3641344506529193546L;
 
     private String key;
     private int memoryBufferAllocatedLength;

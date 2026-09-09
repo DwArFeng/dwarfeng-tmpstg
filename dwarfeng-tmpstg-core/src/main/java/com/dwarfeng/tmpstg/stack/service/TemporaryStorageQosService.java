@@ -1,11 +1,12 @@
 package com.dwarfeng.tmpstg.stack.service;
 
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.basic.stack.exception.ServiceException;
 import com.dwarfeng.tmpstg.stack.bean.dto.TemporaryStorageInfo;
 import com.dwarfeng.tmpstg.stack.handler.TemporaryStorageHandler;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
@@ -76,7 +77,7 @@ public interface TemporaryStorageQosService {
      * @return 指定的键是否存在。
      * @throws ServiceException 服务异常。
      */
-    boolean exists(@Nullable String handlerName, @Nonnull String key) throws ServiceException;
+    boolean exists(@Nullable String handlerName, @NotNull String key) throws ServiceException;
 
     /**
      * 获取指定键对应的临时存储信息。
@@ -86,7 +87,7 @@ public interface TemporaryStorageQosService {
      * @return 指定键对应的临时存储信息。
      * @throws ServiceException 服务异常。
      */
-    TemporaryStorageInfo inspect(@Nullable String handlerName, @Nonnull String key) throws ServiceException;
+    TemporaryStorageInfo inspect(@Nullable String handlerName, @NotNull String key) throws ServiceException;
 
     /**
      * 创建一个新的临时存储。
@@ -105,7 +106,7 @@ public interface TemporaryStorageQosService {
      * @return 指定键对应的输入流。
      * @throws ServiceException 服务异常。
      */
-    InputStream openInputStream(@Nullable String handlerName, @Nonnull String key) throws ServiceException;
+    InputStream openInputStream(@Nullable String handlerName, @NotNull String key) throws ServiceException;
 
     /**
      * 打开指定键对应的输出流。
@@ -116,7 +117,7 @@ public interface TemporaryStorageQosService {
      * @throws ServiceException 服务异常。
      * @see #openOutputStream(String, String, long)
      */
-    OutputStream openOutputStream(@Nullable String handlerName, @Nonnull String key) throws ServiceException;
+    OutputStream openOutputStream(@Nullable String handlerName, @NotNull String key) throws ServiceException;
 
     /**
      * 打开指定键对应的输出流。
@@ -129,7 +130,7 @@ public interface TemporaryStorageQosService {
      * @see #openOutputStream(String, String)
      */
     OutputStream openOutputStream(
-            @Nullable String handlerName, @Nonnull String key, long expectedLength
+            @Nullable String handlerName, @NotNull String key, long expectedLength
     ) throws ServiceException;
 
     /**
@@ -139,7 +140,7 @@ public interface TemporaryStorageQosService {
      * @param key         指定的键。
      * @throws ServiceException 服务异常。
      */
-    void dispose(@Nullable String handlerName, @Nonnull String key) throws ServiceException;
+    void dispose(@Nullable String handlerName, @NotNull String key) throws ServiceException;
 
     /**
      * 移除指定键对应的临时存储。
@@ -148,7 +149,7 @@ public interface TemporaryStorageQosService {
      * @param key         指定的键。
      * @throws ServiceException 服务异常。
      */
-    void remove(@Nullable String handlerName, @Nonnull String key) throws ServiceException;
+    void remove(@Nullable String handlerName, @NotNull String key) throws ServiceException;
 
     /**
      * 如果指定的键对应的临时存储已释放，则移除该临时存储。
@@ -158,7 +159,7 @@ public interface TemporaryStorageQosService {
      * @return 如果移除成功，则返回 <code>true</code>，否则返回 <code>false</code>。
      * @throws ServiceException 服务异常。
      */
-    boolean removeIfDisposed(@Nullable String handlerName, @Nonnull String key) throws ServiceException;
+    boolean removeIfDisposed(@Nullable String handlerName, @NotNull String key) throws ServiceException;
 
     /**
      * 释放并移除指定键对应的临时存储。
@@ -167,7 +168,7 @@ public interface TemporaryStorageQosService {
      * @param key         指定的键。
      * @throws ServiceException 服务异常。
      */
-    void disposeAndRemove(@Nullable String handlerName, @Nonnull String key) throws ServiceException;
+    void disposeAndRemove(@Nullable String handlerName, @NotNull String key) throws ServiceException;
 
     /**
      * 清除处理器中已释放的临时存储。

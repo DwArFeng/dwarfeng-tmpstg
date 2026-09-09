@@ -1,6 +1,6 @@
 package com.dwarfeng.tmpstg.stack.struct;
 
-import com.dwarfeng.dutil.basic.prog.Buildable;
+import com.dwarfeng.dutil.basic.stack.builder.Buildable;
 import com.dwarfeng.tmpstg.stack.util.TemporaryStorageConfigUtil;
 
 /**
@@ -9,6 +9,8 @@ import com.dwarfeng.tmpstg.stack.util.TemporaryStorageConfigUtil;
  * @author DwArFeng
  * @since 1.0.0
  */
+// 该类为带有参数校验逻辑的配置类，不宜改写为 Record。
+@SuppressWarnings("ClassCanBeRecord")
 public class TemporaryStorageConfig {
 
     private final String temporaryFileDirectoryPath;

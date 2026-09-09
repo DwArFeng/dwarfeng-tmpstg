@@ -2,13 +2,12 @@ package com.dwarfeng.tmpstg.node.configuration;
 
 import com.dwarfeng.tmpstg.sdk.util.BeanDefinitionParserUtil;
 import com.dwarfeng.tmpstg.stack.struct.TemporaryStorageConfig;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
-
-import javax.annotation.Nonnull;
 
 /**
  * Tmpstg Config 元素的 BeanDefinitionParser。
@@ -19,7 +18,7 @@ import javax.annotation.Nonnull;
 public class TemporaryStorageConfigDefinitionParser implements BeanDefinitionParser {
 
     @Override
-    public BeanDefinition parse(Element element, @Nonnull ParserContext parserContext) {
+    public BeanDefinition parse(Element element, @NotNull ParserContext parserContext) {
         String configName = (String) BeanDefinitionParserUtil.mayResolveSpel(
                 parserContext, element.getAttribute("config-name")
         );
